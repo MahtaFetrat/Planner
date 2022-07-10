@@ -25,6 +25,7 @@ public class TaskActivity extends AppCompatActivity {
     private void setViewModelObservers() {
         viewModel.getAllTasks().observe(this, allTasks -> {
             //set list items with this list of allTasks
+            //for example titleTextView.setText(allTasks[0].getTitle());
         });
     }
 }
