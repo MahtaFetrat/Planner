@@ -1,20 +1,46 @@
 package com.example.planner.model;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.time.LocalTime;
 
+@Entity
 public class DailyTask {
+
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
+    @ColumnInfo
     private String title;
+
+    @ColumnInfo
     private String description;
-    private LocalTime startTime;
-    private LocalTime endTime;
+
+    @ColumnInfo
+    private String startTime;
+
+    @ColumnInfo
+    private String endTime;
+
+    @ColumnInfo
     private boolean isDone;
 
-    public DailyTask(String title, String description, LocalTime startTime, LocalTime endTime, boolean isDone) {
+    public DailyTask(String title, String description, String startTime, String endTime, boolean isDone) {
         this.title = title;
         this.description = description;
         this.startTime = startTime;
         this.endTime = endTime;
         this.isDone = isDone;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -33,19 +59,19 @@ public class DailyTask {
         this.description = description;
     }
 
-    public LocalTime getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalTime startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public LocalTime getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalTime endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 

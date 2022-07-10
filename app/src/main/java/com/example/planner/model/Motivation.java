@@ -1,12 +1,32 @@
 package com.example.planner.model;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Motivation {
+
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
+    @ColumnInfo
     private String title;
+
+    @ColumnInfo
     private String description;
 
     public Motivation(String title, String description) {
         this.title = title;
         this.description = description;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
