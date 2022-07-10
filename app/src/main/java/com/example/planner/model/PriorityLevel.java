@@ -1,4 +1,4 @@
-package com.example.planner.module;
+package com.example.planner.model;
 
 public enum PriorityLevel {
     REGULAR,
