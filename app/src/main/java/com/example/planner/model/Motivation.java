@@ -1,4 +1,4 @@
-package com.example.planner.module;
+package com.example.planner.model;
 
 public class Motivation {
     private String title;

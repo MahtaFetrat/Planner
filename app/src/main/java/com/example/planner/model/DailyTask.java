@@ -1,19 +1,19 @@
-package com.example.planner.module;
+package com.example.planner.model;
 
-import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class DailyTask {
     private String title;
     private String description;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private LocalTime startTime;
+    private LocalTime endTime;
     private boolean isDone;
 
-    public DailyTask(String title, String description, LocalDate startDate, LocalDate endDate, boolean isDone) {
+    public DailyTask(String title, String description, LocalTime startTime, LocalTime endTime, boolean isDone) {
         this.title = title;
         this.description = description;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.isDone = isDone;
     }
 
@@ -33,20 +33,20 @@ public class DailyTask {
         this.description = description;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
+    public LocalTime getStartTime() {
+        return startTime;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
     }
 
-    public LocalDate getEndDate() {
-        return endDate;
+    public LocalTime getEndTime() {
+        return endTime;
     }
 
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
     }
 
     public boolean isDone() {
