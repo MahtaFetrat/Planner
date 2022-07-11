@@ -1,9 +1,11 @@
 package com.example.planner.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -33,6 +35,30 @@ public class DailyTask {
         this.startTime = startTime;
         this.endTime = endTime;
         this.isDone = isDone;
+    }
+
+    public static DailyTask createNewDailyTask(String title, String description, int startTimeHour, int startTimeMinute,
+                                               int startTimeSecond, int endTimeHour, int endTimeMinute, int endTimeSecond,
+                                               boolean isDone) {
+        LocalTime start = LocalTime.of(startTimeHour, startTimeMinute, startTimeSecond);
+        LocalTime end = LocalTime.of(endTimeHour, endTimeMinute, endTimeSecond);
+        return new DailyTask(title, description, start.toString(), end.toString(), isDone);
+    }
+
+    public LocalTime getStartLocalTime() {
+        return LocalTime.parse(startTime);
+    }
+
+    public void setStartLocalTime(LocalTime time) {
+        this.startTime = time.toString();
+    }
+
+    public LocalTime getEndLocalTime() {
+        return LocalTime.parse(endTime);
+    }
+
+    public void setEndLocalTime(LocalTime time) {
+        this.endTime = time.toString();
     }
 
     public int getId() {

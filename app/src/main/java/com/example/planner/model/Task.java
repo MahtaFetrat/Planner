@@ -5,6 +5,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 public class Task {
@@ -29,6 +30,22 @@ public class Task {
         this.description = description;
         this.priorityLevel = priorityLevel;
         this.reminderTime = reminderTime;
+    }
+
+    public static Task createNewTask(String title, String description, PriorityLevel priorityLevel, int reminderTimeYear,
+                                     int reminderTimeMonth, int reminderTimeDay, int reminderTimeHour, int reminderTimeMinute,
+                                     int reminderTimeSecond) {
+        LocalDateTime time = LocalDateTime.of(reminderTimeYear, reminderTimeMonth, reminderTimeDay, reminderTimeHour,
+                reminderTimeMinute, reminderTimeSecond);
+        return new Task(title, description, priorityLevel, time.toString());
+    }
+
+    public LocalDateTime getReminderLocalDateTime() {
+        return LocalDateTime.parse(reminderTime);
+    }
+
+    public void setReminderLocalDateTime(LocalDateTime time) {
+        this.reminderTime = time.toString();
     }
 
     public int getId() {
