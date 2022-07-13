@@ -1,14 +1,17 @@
 package com.example.planner.ui.views;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.PopupMenu;
 import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
@@ -21,7 +24,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class CreateTaskFragment extends Fragment {
+public class CreateTaskFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
     DatePickerDialog datePickerDialog;
     TextInputEditText newTaskName;
     Button newTaskDueDate;
@@ -137,5 +140,30 @@ public class CreateTaskFragment extends Fragment {
 
         timePickerDialog.setTitle("00:00");
         timePickerDialog.show();
+    }
+
+    public void showPriorities(View view) {
+        PopupMenu popupMenu = new PopupMenu(this.getContext(), view);
+        popupMenu.setOnMenuItemClickListener(this);
+        popupMenu.inflate(R.menu.priorties_menu);
+        popupMenu.show();
+    }
+
+    @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
+    @Override
+    public boolean onMenuItemClick(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.regular:
+                newTaskPriority.setText("Regular");
+                return true;
+            case R.id.important:
+                newTaskPriority.setText("Important");
+                return true;
+            case R.id.essential:
+                newTaskPriority.setText("Essential");
+                return true;
+            default:
+                return false;
+        }
     }
 }

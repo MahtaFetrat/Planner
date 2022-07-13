@@ -7,4 +7,7 @@
     <string name="due_date">Due date</string>
     <string name="set_reminder">Set reminder for…</string>
     <string name="set_priority">Set priority</string>
+    <string name="regular">Regular</string>
+    <string name="important">Important</string>
+    <string name="essential">Essential</string>
 </resources>
