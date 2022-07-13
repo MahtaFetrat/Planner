@@ -1,11 +1,13 @@
 package com.example.planner.ui.views;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 
 import com.example.planner.R;
@@ -26,6 +28,14 @@ public class TaskActivity extends AppCompatActivity {
         createNewTask = findViewById(R.id.createNewTaskButton);
         tasks = findViewById(R.id.tasksRecyclerView);
 
+        createNewTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.taskActivity, new CreateTaskFragment()).commit();
+            }
+        });
+
         setViewModelObservers();
     }
 
@@ -34,8 +44,6 @@ public class TaskActivity extends AppCompatActivity {
             TasksAdapter tasksAdapter = new TasksAdapter(this, allTasks);
             tasks.setAdapter(tasksAdapter);
             tasks.setLayoutManager(new LinearLayoutManager(this));
-            //set list items with this list of allTasks
-            //for example titleTextView.setText(allTasks[0].getTitle());
         });
     }
 }

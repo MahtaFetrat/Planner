@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -19,6 +20,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.planner.R;
+import com.example.planner.model.PriorityLevel;
+import com.example.planner.model.Task;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Calendar;
@@ -27,9 +30,11 @@ import java.util.Locale;
 public class CreateTaskFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
     DatePickerDialog datePickerDialog;
     TextInputEditText newTaskName;
+    TextInputEditText newTaskDescription;
     Button newTaskDueDate;
     Button newTaskReminder;
     Button newTaskPriority;
+    Button createNewTask;
     int hour, minute;
 
     @Override
@@ -50,11 +55,44 @@ public class CreateTaskFragment extends Fragment implements PopupMenu.OnMenuItem
         initDatePicker();
 
         newTaskName = view.findViewById(R.id.newTaskNameTextInputEditText);
+        newTaskDescription = view.findViewById(R.id.newTaskDescriptionTextInputEditText);
         newTaskDueDate = view.findViewById(R.id.newTaskDueDateButton);
         newTaskReminder = view.findViewById(R.id.newTaskReminderButton);
         newTaskPriority = view.findViewById(R.id.newTaskPriorityButton);
+        createNewTask = view.findViewById(R.id.createTaskButton);
+
+        newTaskDueDate.setOnClickListener(this::openDatePicker);
+        newTaskReminder.setOnClickListener(this::openTimePicker);
+        newTaskPriority.setOnClickListener(this::showPriorities);
+        createNewTask.setOnClickListener(this::createTask);
 
         newTaskDueDate.setText(getTodaysDate());
+    }
+
+    private void createTask(View view) {
+        String taskName = String.valueOf(newTaskName.getText());
+        String taskDescription = String.valueOf(newTaskDescription.getText());
+        String[] taskDueDate = String.valueOf(newTaskDueDate.getText()).split(" ");
+        String[] taskReminder = String.valueOf(newTaskReminder.getText()).split(":");
+        PriorityLevel taskPriority = getPriority(String.valueOf(newTaskPriority.getText()));
+
+        Task.createNewTask(taskName, taskDescription, taskPriority, Integer.parseInt(taskDueDate[2]), getMonthInt(taskDueDate[0]), Integer.parseInt(taskDueDate[1]), Integer.parseInt(taskReminder[0]), Integer.parseInt(taskReminder[1]), 0);
+
+        Intent intent = new Intent(getActivity(), TaskActivity.class);
+        startActivity(intent);
+    }
+
+    private PriorityLevel getPriority(String priority) {
+        switch (priority) {
+            case "Regular":
+                return PriorityLevel.REGULAR;
+            case "Important":
+                return PriorityLevel.IMPORTANT;
+            case "Essential":
+                return PriorityLevel.ESSENTIAL;
+            default:
+                return null;
+        }
     }
 
     private String getTodaysDate() {
@@ -91,7 +129,7 @@ public class CreateTaskFragment extends Fragment implements PopupMenu.OnMenuItem
     }
 
     private String getMonthString(int month) {
-        switch (month){
+        switch (month) {
             case 1:
                 return "JAN";
             case 2:
@@ -121,6 +159,37 @@ public class CreateTaskFragment extends Fragment implements PopupMenu.OnMenuItem
         }
     }
 
+    private int getMonthInt(String month) {
+        switch (month) {
+            case "JAN":
+                return 1;
+            case "FEB":
+                return 2;
+            case "MAR":
+                return 3;
+            case "APR":
+                return 4;
+            case "MAY":
+                return 5;
+            case "JUN":
+                return 6;
+            case "JUL":
+                return 7;
+            case "AUG":
+                return 8;
+            case "SEP":
+                return 9;
+            case "OCT":
+                return 10;
+            case "NOV":
+                return 11;
+            case "DEC":
+                return 12;
+            default:
+                return 0;
+        }
+    }
+
     public void openDatePicker(View view) {
         datePickerDialog.show();
     }
@@ -142,13 +211,6 @@ public class CreateTaskFragment extends Fragment implements PopupMenu.OnMenuItem
         timePickerDialog.show();
     }
 
-    public void showPriorities(View view) {
-        PopupMenu popupMenu = new PopupMenu(this.getContext(), view);
-        popupMenu.setOnMenuItemClickListener(this);
-        popupMenu.inflate(R.menu.priorties_menu);
-        popupMenu.show();
-    }
-
     @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     @Override
     public boolean onMenuItemClick(MenuItem menuItem) {
@@ -165,5 +227,12 @@ public class CreateTaskFragment extends Fragment implements PopupMenu.OnMenuItem
             default:
                 return false;
         }
+    }
+
+    public void showPriorities(View view) {
+        PopupMenu popupMenu = new PopupMenu(this.getContext(), view);
+        popupMenu.setOnMenuItemClickListener(this);
+        popupMenu.inflate(R.menu.priorties_menu);
+        popupMenu.show();
     }
 }
