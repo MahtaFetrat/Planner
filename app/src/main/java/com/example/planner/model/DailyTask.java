@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
-public class DailyTask {
+public class DailyTask implements Comparable<DailyTask> {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -107,5 +107,24 @@ public class DailyTask {
 
     public void setDone(boolean done) {
         isDone = done;
+    }
+
+    @Override
+    public int compareTo(DailyTask dailyTask) {
+        LocalTime thisTime = LocalTime.parse(this.startTime);
+        LocalTime taskTime = LocalTime.parse(dailyTask.startTime);
+        if (thisTime.getHour() == taskTime.getHour()) {
+            if (thisTime.getMinute() == taskTime.getMinute()) {
+                if (thisTime.getSecond() == taskTime.getSecond()) {
+                    return 0;
+                } else {
+                    return taskTime.getSecond() - thisTime.getSecond();
+                }
+            } else {
+                return taskTime.getMinute() - thisTime.getMinute();
+            }
+        } else {
+            return taskTime.getHour() - thisTime.getHour();
+        }
     }
 }

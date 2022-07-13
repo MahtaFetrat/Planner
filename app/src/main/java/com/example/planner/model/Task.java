@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
-public class Task {
+public class Task implements Comparable<Task> {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -86,5 +86,40 @@ public class Task {
 
     public void setReminderTime(String reminderTime) {
         this.reminderTime = reminderTime;
+    }
+
+    @Override
+    public int compareTo(Task task) {
+        LocalDateTime thisTime = LocalDateTime.parse(this.reminderTime);
+        LocalDateTime taskTime = LocalDateTime.parse(task.reminderTime);
+        if (thisTime.getYear() == taskTime.getYear()) {
+            if (thisTime.getMonthValue() == taskTime.getMonthValue()) {
+                if (thisTime.getDayOfMonth() == taskTime.getDayOfMonth()) {
+                    if (thisTime.getHour() == taskTime.getHour()) {
+                        if (thisTime.getMinute() == taskTime.getMinute()) {
+                            if (thisTime.getSecond() == taskTime.getSecond()) {
+                                if (this.priorityLevel == task.priorityLevel) {
+                                    return 0;
+                                } else if (this.priorityLevel == PriorityLevel.ESSENTIAL || task.priorityLevel == PriorityLevel.REGULAR) {
+                                    return 1;
+                                } else return -1;
+                            } else {
+                                return taskTime.getSecond() - thisTime.getSecond();
+                            }
+                        } else {
+                            return taskTime.getMinute() - thisTime.getMinute();
+                        }
+                    } else {
+                        return taskTime.getHour() - thisTime.getHour();
+                    }
+                } else {
+                    return taskTime.getDayOfMonth() - thisTime.getDayOfMonth();
+                }
+            } else {
+                return taskTime.getMonthValue() - thisTime.getMonthValue();
+            }
+        } else {
+            return taskTime.getYear() - thisTime.getYear();
+        }
     }
 }

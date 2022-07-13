@@ -15,6 +15,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class Repository {
@@ -79,12 +81,16 @@ public class Repository {
 
     public void insertTask(Task task) {
         db.plannerDao().insert(task);
-        allTasks = new MutableLiveData<>(db.plannerDao().getAllTasks());
+        List<Task> tasks = db.plannerDao().getAllTasks();
+        Collections.sort(tasks);
+        allTasks = new MutableLiveData<>(tasks);
     }
 
     public void insertDailyTask(DailyTask dailyTask) {
         db.plannerDao().insert(dailyTask);
-        allDailyTasks = new MutableLiveData<>(db.plannerDao().getAllDailyTasks());
+        List<DailyTask> dailyTasks = db.plannerDao().getAllDailyTasks();
+        Collections.sort(dailyTasks);
+        allDailyTasks = new MutableLiveData<>(dailyTasks);
     }
 
     public void insertMotivation(Motivation motivation) {
@@ -94,12 +100,16 @@ public class Repository {
 
     public void deleteTask(Task task) {
         db.plannerDao().delete(task);
-        allTasks = new MutableLiveData<>(db.plannerDao().getAllTasks());
+        List<Task> tasks = db.plannerDao().getAllTasks();
+        Collections.sort(tasks);
+        allTasks = new MutableLiveData<>(tasks);
     }
 
     public void deleteDailyTask(DailyTask dailyTask) {
         db.plannerDao().delete(dailyTask);
-        allDailyTasks = new MutableLiveData<>(db.plannerDao().getAllDailyTasks());
+        List<DailyTask> dailyTasks = db.plannerDao().getAllDailyTasks();
+        Collections.sort(dailyTasks);
+        allDailyTasks = new MutableLiveData<>(dailyTasks);
     }
 
     public void deleteMotivation(Motivation motivation) {
