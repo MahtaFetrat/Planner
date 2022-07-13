@@ -44,7 +44,6 @@ public class Repository {
             new Motivation("motiv3", "motiv_desc3")
     ));
 
-
     Repository(Application application) {
         db = PlannerDatabase.getINSTANCE(application);
 
