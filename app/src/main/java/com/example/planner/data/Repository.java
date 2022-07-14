@@ -3,60 +3,28 @@ package com.example.planner.data;
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.example.planner.db.PlannerDatabase;
 import com.example.planner.model.DailyTask;
 import com.example.planner.model.Motivation;
-import com.example.planner.model.PriorityLevel;
 import com.example.planner.model.Task;
 
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 public class Repository {
     private static Repository instance;
     private PlannerDatabase db;
 
-    private MutableLiveData<List<Task>> allTasks;
-    private MutableLiveData<List<DailyTask>> allDailyTasks;
-    private MutableLiveData<List<Motivation>> allMotivations;
-
-    //Sample data for test:
-    ArrayList<Task> allSampleTasks = new ArrayList<>(Arrays.asList(
-            new Task("task1", "desc1", PriorityLevel.ESSENTIAL, LocalDateTime.now().toString()),
-            new Task("task2", "desc2", PriorityLevel.ESSENTIAL, LocalDateTime.now().toString()),
-            new Task("task3", "desc3", PriorityLevel.ESSENTIAL, LocalDateTime.now().toString())
-    ));
-    ArrayList<DailyTask> allSampleDailyTasks = new ArrayList<>(Arrays.asList(
-            new DailyTask("daily_title1", "daily_desc1", LocalTime.now().toString(), LocalTime.now().toString(), true),
-            new DailyTask("daily_title2", "daily_desc2", LocalTime.now().toString(), LocalTime.now().toString(), true),
-            new DailyTask("daily_title3", "daily_desc3", LocalTime.now().toString(), LocalTime.now().toString(), true)
-    ));
-    ArrayList<Motivation> allSampleMotivations = new ArrayList<>(Arrays.asList(
-            new Motivation("motiv1", "motiv_desc1"),
-            new Motivation("motiv2", "motiv_desc2"),
-            new Motivation("motiv3", "motiv_desc3")
-    ));
+    private LiveData<List<Task>> allTasks;
+    private LiveData<List<DailyTask>> allDailyTasks;
+    private LiveData<List<Motivation>> allMotivations;
 
     Repository(Application application) {
         db = PlannerDatabase.getINSTANCE(application);
 
-        List<Task> dbTasks = db.plannerDao().getAllTasks();
-        List<DailyTask> dbDailyTasks = db.plannerDao().getAllDailyTasks();
-        List<Motivation> dbMotivations = db.plannerDao().getAllMotivations();
-
-        allTasks = (dbTasks == null) ? new MutableLiveData<>(new ArrayList<>()) :
-                new MutableLiveData<>(db.plannerDao().getAllTasks());
-        allDailyTasks = (dbDailyTasks == null) ? new MutableLiveData<>(new ArrayList<>()) :
-                new MutableLiveData<>(db.plannerDao().getAllDailyTasks());
-        allMotivations = (dbMotivations == null) ? new MutableLiveData<>(new ArrayList<>()) :
-                new MutableLiveData<>(db.plannerDao().getAllMotivations());
+        allTasks = db.plannerDao().getAllTasks();
+        allDailyTasks = db.plannerDao().getAllDailyTasks();
+        allMotivations = db.plannerDao().getAllMotivations();
     }
 
     public static Repository getInstance(Application application) {
@@ -80,39 +48,25 @@ public class Repository {
 
     public void insertTask(Task task) {
         db.plannerDao().insert(task);
-        List<Task> tasks = db.plannerDao().getAllTasks();
-        Collections.sort(tasks);
-        allTasks = new MutableLiveData<>(tasks);
     }
 
     public void insertDailyTask(DailyTask dailyTask) {
         db.plannerDao().insert(dailyTask);
-        List<DailyTask> dailyTasks = db.plannerDao().getAllDailyTasks();
-        Collections.sort(dailyTasks);
-        allDailyTasks = new MutableLiveData<>(dailyTasks);
     }
 
     public void insertMotivation(Motivation motivation) {
         db.plannerDao().insert(motivation);
-        allMotivations = new MutableLiveData<>(db.plannerDao().getAllMotivations());
     }
 
     public void deleteTask(Task task) {
         db.plannerDao().delete(task);
-        List<Task> tasks = db.plannerDao().getAllTasks();
-        Collections.sort(tasks);
-        allTasks = new MutableLiveData<>(tasks);
     }
 
     public void deleteDailyTask(DailyTask dailyTask) {
         db.plannerDao().delete(dailyTask);
-        List<DailyTask> dailyTasks = db.plannerDao().getAllDailyTasks();
-        Collections.sort(dailyTasks);
-        allDailyTasks = new MutableLiveData<>(dailyTasks);
     }
 
     public void deleteMotivation(Motivation motivation) {
         db.plannerDao().delete(motivation);
-        allMotivations = new MutableLiveData<>(db.plannerDao().getAllMotivations());
     }
 }
