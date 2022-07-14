@@ -6,40 +6,46 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.PopupMenu;
-import android.widget.TimePicker;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.planner.R;
 import com.example.planner.model.PriorityLevel;
 import com.example.planner.model.Task;
+import com.example.planner.ui.viewModels.TaskViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class CreateTaskActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
-    DatePickerDialog datePickerDialog;
-    TextInputEditText newTaskName;
-    TextInputEditText newTaskDescription;
-    Button newTaskDueDate;
-    Button newTaskReminder;
-    Button newTaskPriority;
-    Button createNewTask;
-    int hour, minute;
+    private TaskViewModel viewModel;
+    private DatePickerDialog datePickerDialog;
+    private TextInputEditText newTaskName;
+    private TextInputEditText newTaskDescription;
+    private Button newTaskDueDate;
+    private Button newTaskReminder;
+    private Button newTaskPriority;
+    private Button createNewTask;
+    private int hour, minute;
+    private PriorityLevel taskPriority;
+    private SimpleDateFormat formatter = new SimpleDateFormat("MMMM dd yyyy");
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_task);
+
+        viewModel = new ViewModelProvider(this).get(TaskViewModel.class);
 
         initDatePicker();
 
@@ -61,43 +67,34 @@ public class CreateTaskActivity extends AppCompatActivity implements PopupMenu.O
     private void createTask(View view) {
         String taskName = String.valueOf(newTaskName.getText());
         String taskDescription = String.valueOf(newTaskDescription.getText());
-        String[] taskDueDate = String.valueOf(newTaskDueDate.getText()).split(" ");
-        String[] taskReminder = String.valueOf(newTaskReminder.getText()).split(":");
-        PriorityLevel taskPriority = getPriority(String.valueOf(newTaskPriority.getText()));
+        String taskDueDate = String.valueOf(newTaskDueDate.getText());
 
-        Task.createNewTask(taskName, taskDescription, taskPriority, Integer.parseInt(taskDueDate[2]), getMonthInt(taskDueDate[0]), Integer.parseInt(taskDueDate[1]), Integer.parseInt(taskReminder[0]), Integer.parseInt(taskReminder[1]), 0);
+        Date dueDate = null;
+        try {
+            dueDate = formatter.parse(taskDueDate);
+            Task newTask = Task.createNewTask(taskName, taskDescription, taskPriority, dueDate.getYear() + 1900, dueDate.getMonth(), dueDate.getDay(), hour, minute, 0);
+            viewModel.insert(newTask);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         Intent intent = new Intent(CreateTaskActivity.this, TaskActivity.class);
         startActivity(intent);
     }
 
-    private PriorityLevel getPriority(String priority) {
-        switch (priority) {
-            case "Regular":
-                return PriorityLevel.REGULAR;
-            case "Important":
-                return PriorityLevel.IMPORTANT;
-            case "Essential":
-                return PriorityLevel.ESSENTIAL;
-            default:
-                return null;
-        }
-    }
-
     private String getTodaysDate() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH) + 1;
+        int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_WEEK);
-
-        return makeDateString(day, month, year);
+        Date todaysDate = new Date(year - 1900, month, day);
+        return formatter.format(todaysDate);
     }
 
     private void initDatePicker() {
         DatePickerDialog.OnDateSetListener dateSetListener = (datePicker, year, month, day) -> {
-            month += 1;
-            String date = makeDateString(day, month, year);
-            newTaskDueDate.setText(date);
+            Date newTaskDate = new Date(year - 1900, month, day);
+            newTaskDueDate.setText(formatter.format(newTaskDate));
         };
 
         Calendar calendar = Calendar.getInstance();
@@ -108,41 +105,6 @@ public class CreateTaskActivity extends AppCompatActivity implements PopupMenu.O
         int style = AlertDialog.THEME_HOLO_DARK;
 
         datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
-    }
-
-    private String makeDateString(int day, int month, int year) {
-        return getMonthString(month) + " " + day + " " + year;
-    }
-
-    private String getMonthString(int month) {
-        switch (month) {
-            case 1:
-                return "JAN";
-            case 2:
-                return "FEB";
-            case 3:
-                return "MAR";
-            case 4:
-                return "APR";
-            case 5:
-                return "MAY";
-            case 6:
-                return "JUN";
-            case 7:
-                return "JUL";
-            case 8:
-                return "AUG";
-            case 9:
-                return "SEP";
-            case 10:
-                return "OCT";
-            case 11:
-                return "NOV";
-            case 12:
-                return "DEC";
-            default:
-                return "";
-        }
     }
 
     private int getMonthInt(String month) {
@@ -189,7 +151,6 @@ public class CreateTaskActivity extends AppCompatActivity implements PopupMenu.O
 
         int style = AlertDialog.THEME_HOLO_DARK;
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, style, timeSetListener, hour, minute, true);
-
         timePickerDialog.setTitle("00:00");
         timePickerDialog.show();
     }
@@ -200,12 +161,15 @@ public class CreateTaskActivity extends AppCompatActivity implements PopupMenu.O
         switch (menuItem.getItemId()) {
             case R.id.regular:
                 newTaskPriority.setText("Regular");
+                taskPriority = PriorityLevel.REGULAR;
                 return true;
             case R.id.important:
                 newTaskPriority.setText("Important");
+                taskPriority = PriorityLevel.IMPORTANT;
                 return true;
             case R.id.essential:
                 newTaskPriority.setText("Essential");
+                taskPriority = PriorityLevel.ESSENTIAL;
                 return true;
             default:
                 return false;
