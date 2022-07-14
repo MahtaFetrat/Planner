@@ -18,8 +18,10 @@ import java.util.List;
 
 public class TaskActivity extends AppCompatActivity {
     private TaskViewModel viewModel;
+
     private Button createNewTask;
     private RecyclerView tasks;
+
     private TasksAdapter tasksAdapter;
 
     @Override
@@ -29,21 +31,28 @@ public class TaskActivity extends AppCompatActivity {
 
         viewModel = new ViewModelProvider(this).get(TaskViewModel.class);
 
+        findViewsById();
+        initializeListAdapter();
+        setOnClickListeners();
+        setViewModelObservers();
+    }
+
+    private void findViewsById() {
         createNewTask = findViewById(R.id.createNewTaskButton);
         tasks = findViewById(R.id.tasksRecyclerView);
+    }
 
-
-        List<Task> myTasks = new ArrayList<>();
-        tasksAdapter = new TasksAdapter(this, myTasks);
+    private void initializeListAdapter() {
+        tasksAdapter = new TasksAdapter(this, new ArrayList<>());
         tasks.setAdapter(tasksAdapter);
         tasks.setLayoutManager(new LinearLayoutManager(this));
+    }
 
+    private void setOnClickListeners() {
         createNewTask.setOnClickListener(view -> {
             Intent intent = new Intent(TaskActivity.this, CreateTaskActivity.class);
             startActivity(intent);
         });
-
-        setViewModelObservers();
     }
 
     private void setViewModelObservers() {
