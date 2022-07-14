@@ -3,7 +3,6 @@ package com.example.planner.ui.views;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,11 +19,8 @@ import com.example.planner.model.Task;
 import com.example.planner.ui.viewModels.TaskViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 public class CreateTaskActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {

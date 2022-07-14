@@ -17,13 +17,13 @@ import java.util.List;
 public interface PlannerDao {
 
     @Query("SELECT * FROM DailyTask")
-    List<DailyTask> getAllDailyTasks();
+    LiveData<List<DailyTask>> getAllDailyTasks();
 
     @Query("SELECT * FROM task")
-    List<Task> getAllTasks();
+    LiveData<List<Task>> getAllTasks();
 
     @Query("SELECT * FROM Motivation")
-    List<Motivation> getAllMotivations();
+    LiveData<List<Motivation>> getAllMotivations();
 
     @Insert
     void insert(Task... tasks);
