@@ -17,8 +17,8 @@ import java.util.List;
 
 public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHolder> {
 
-    Context context;
-    List<Task> tasks;
+    private Context context;
+    private List<Task> tasks;
 
 
     public TasksAdapter(Context ct, List<Task> tsk) {
@@ -42,6 +42,11 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHol
     @Override
     public int getItemCount() {
         return tasks.size();
+    }
+
+    public void updateList(List<Task> allTasks) {
+        tasks = allTasks;
+        notifyDataSetChanged();
     }
 
     public class TasksViewHolder extends RecyclerView.ViewHolder {

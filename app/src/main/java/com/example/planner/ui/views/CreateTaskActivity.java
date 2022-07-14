@@ -15,9 +15,8 @@ import android.widget.DatePicker;
 import android.widget.PopupMenu;
 import android.widget.TimePicker;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.planner.R;
 import com.example.planner.model.PriorityLevel;
@@ -27,7 +26,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class CreateTaskFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
+public class CreateTaskActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
     DatePickerDialog datePickerDialog;
     TextInputEditText newTaskName;
     TextInputEditText newTaskDescription;
@@ -38,28 +37,18 @@ public class CreateTaskFragment extends Fragment implements PopupMenu.OnMenuItem
     int hour, minute;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_create_new_task, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        setContentView(R.layout.activity_create_new_task);
 
         initDatePicker();
 
-        newTaskName = view.findViewById(R.id.newTaskNameTextInputEditText);
-        newTaskDescription = view.findViewById(R.id.newTaskDescriptionTextInputEditText);
-        newTaskDueDate = view.findViewById(R.id.newTaskDueDateButton);
-        newTaskReminder = view.findViewById(R.id.newTaskReminderButton);
-        newTaskPriority = view.findViewById(R.id.newTaskPriorityButton);
-        createNewTask = view.findViewById(R.id.createTaskButton);
+        newTaskName = findViewById(R.id.newTaskNameTextInputEditText);
+        newTaskDescription = findViewById(R.id.newTaskDescriptionTextInputEditText);
+        newTaskDueDate = findViewById(R.id.newTaskDueDateButton);
+        newTaskReminder = findViewById(R.id.newTaskReminderButton);
+        newTaskPriority = findViewById(R.id.newTaskPriorityButton);
+        createNewTask = findViewById(R.id.createTaskButton);
 
         newTaskDueDate.setOnClickListener(this::openDatePicker);
         newTaskReminder.setOnClickListener(this::openTimePicker);
@@ -78,7 +67,7 @@ public class CreateTaskFragment extends Fragment implements PopupMenu.OnMenuItem
 
         Task.createNewTask(taskName, taskDescription, taskPriority, Integer.parseInt(taskDueDate[2]), getMonthInt(taskDueDate[0]), Integer.parseInt(taskDueDate[1]), Integer.parseInt(taskReminder[0]), Integer.parseInt(taskReminder[1]), 0);
 
-        Intent intent = new Intent(getActivity(), TaskActivity.class);
+        Intent intent = new Intent(CreateTaskActivity.this, TaskActivity.class);
         startActivity(intent);
     }
 
@@ -105,13 +94,10 @@ public class CreateTaskFragment extends Fragment implements PopupMenu.OnMenuItem
     }
 
     private void initDatePicker() {
-        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month += 1;
-                String date = makeDateString(day, month, year);
-                newTaskDueDate.setText(date);
-            }
+        DatePickerDialog.OnDateSetListener dateSetListener = (datePicker, year, month, day) -> {
+            month += 1;
+            String date = makeDateString(day, month, year);
+            newTaskDueDate.setText(date);
         };
 
         Calendar calendar = Calendar.getInstance();
@@ -121,7 +107,7 @@ public class CreateTaskFragment extends Fragment implements PopupMenu.OnMenuItem
 
         int style = AlertDialog.THEME_HOLO_DARK;
 
-        datePickerDialog = new DatePickerDialog(this.getContext(), style, dateSetListener, year, month, day);
+        datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
     }
 
     private String makeDateString(int day, int month, int year) {
@@ -195,17 +181,14 @@ public class CreateTaskFragment extends Fragment implements PopupMenu.OnMenuItem
     }
 
     private void openTimePicker(View view) {
-        TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker timePicker, int h, int m) {
-                hour = h;
-                minute = m;
-                newTaskReminder.setText(String.format(Locale.getDefault(), "%02d:%02d", hour, minute));
-            }
+        TimePickerDialog.OnTimeSetListener timeSetListener = (timePicker, h, m) -> {
+            hour = h;
+            minute = m;
+            newTaskReminder.setText(String.format(Locale.getDefault(), "%02d:%02d", hour, minute));
         };
 
         int style = AlertDialog.THEME_HOLO_DARK;
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this.getContext(), style, timeSetListener, hour, minute, true);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, style, timeSetListener, hour, minute, true);
 
         timePickerDialog.setTitle("00:00");
         timePickerDialog.show();
@@ -230,7 +213,7 @@ public class CreateTaskFragment extends Fragment implements PopupMenu.OnMenuItem
     }
 
     public void showPriorities(View view) {
-        PopupMenu popupMenu = new PopupMenu(this.getContext(), view);
+        PopupMenu popupMenu = new PopupMenu(this, view);
         popupMenu.setOnMenuItemClickListener(this);
         popupMenu.inflate(R.menu.priorties_menu);
         popupMenu.show();

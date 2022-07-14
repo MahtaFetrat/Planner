@@ -12,6 +12,8 @@
         <activity
             android:name=".ui.views.TaskActivity"
             android:exported="false" />
+        <activity android:name=".ui.views.CreateTaskActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
