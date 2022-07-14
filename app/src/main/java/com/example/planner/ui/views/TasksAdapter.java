@@ -16,7 +16,7 @@ import java.util.List;
 
 public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHolder> {
 
-    private Context context;
+    private final Context context;
     private List<Task> tasks;
 
 
@@ -48,7 +48,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHol
         notifyDataSetChanged();
     }
 
-    public class TasksViewHolder extends RecyclerView.ViewHolder {
+    public static class TasksViewHolder extends RecyclerView.ViewHolder {
 
         TextView taskName;
         TextView taskDescription;
