@@ -10,11 +10,9 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import com.example.planner.R;
-import com.example.planner.model.Task;
 import com.example.planner.ui.viewModels.TaskViewModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class TaskActivity extends AppCompatActivity {
     private TaskViewModel viewModel;
