@@ -16,10 +16,10 @@ import java.util.List;
 @Dao
 public interface PlannerDao {
 
-    @Query("SELECT * FROM DailyTask")
+    @Query("SELECT * FROM DailyTask ORDER BY startTime ASC")
     LiveData<List<DailyTask>> getAllDailyTasks();
 
-    @Query("SELECT * FROM task")
+    @Query("SELECT * FROM task ORDER BY reminderTime ASC , priorityLevel ASC")
     LiveData<List<Task>> getAllTasks();
 
     @Query("SELECT * FROM Motivation")
