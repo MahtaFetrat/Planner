@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_nav"
+    app:startDestination="@id/taskFragment">
+
+    <fragment
+        android:id="@+id/taskFragment"
+        android:name="com.example.planner.ui.views.TaskFragment"
+        android:label="fragment_task"
+        tools:layout="@layout/fragment_task" >
+        <action
+            android:id="@+id/action_taskFragment_to_dailyTaskFragment"
+            app:destination="@id/dailyTaskFragment" />
+        <action
+            android:id="@+id/action_taskFragment_to_motivationFragment"
+            app:destination="@id/motivationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dailyTaskFragment"
+        android:name="com.example.planner.ui.views.DailyTaskFragment"
+        android:label="fragment_daily_task"
+        tools:layout="@layout/fragment_daily_task" >
+        <action
+            android:id="@+id/action_dailyTaskFragment_to_motivationFragment"
+            app:destination="@id/motivationFragment" />
+        <action
+            android:id="@+id/action_dailyTaskFragment_to_taskFragment"
+            app:destination="@id/taskFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/motivationFragment"
+        android:name="com.example.planner.ui.views.MotivationFragment"
+        android:label="fragment_motivation"
+        tools:layout="@layout/fragment_motivation" >
+        <action
+            android:id="@+id/action_motivationFragment_to_dailyTaskFragment"
+            app:destination="@id/dailyTaskFragment" />
+        <action
+            android:id="@+id/action_motivationFragment_to_taskFragment"
+            app:destination="@id/taskFragment" />
+    </fragment>
+</navigation>
