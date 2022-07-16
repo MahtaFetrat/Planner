@@ -14,9 +14,6 @@
             android:exported="false"
             android:label="@string/settings_activity_title"/>
         <activity
-            android:name=".ui.views.TaskActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.views.CreateTaskActivity"
             android:exported="false" />
         <activity

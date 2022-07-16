@@ -22,9 +22,12 @@
     <!-- Theme Preferences -->
     <string name="theme_title">Select theme</string>
     <string name="settings_activity_title">Settings</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Bottom Navigation -->
     <string name="task_nav_menu_title">Tasks</string>
     <string name="daily_nav_menu_title">Daily</string>
     <string name="motivation_nav_menu_title">Motivation</string>
+    <string name="MotivationFragmentTitle">Motivation</string>
+    <string name="DailyFragmentTitle">Today\'s Plan</string>
+    <string name="Tasks">Upcoming Tasks</string>
 </resources>
