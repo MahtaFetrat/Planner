@@ -4,7 +4,6 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.planner.db.PlannerDatabase;
 import com.example.planner.model.DailyTask;
 import com.example.planner.model.Motivation;
 import com.example.planner.model.Task;

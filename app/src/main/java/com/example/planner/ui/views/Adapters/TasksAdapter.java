@@ -1,4 +1,4 @@
-package com.example.planner.ui.views;
+package com.example.planner.ui.views.Adapters;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -12,7 +12,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.planner.R;
-import com.example.planner.model.PriorityLevel;
 import com.example.planner.model.Task;
 
 import java.util.List;

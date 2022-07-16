@@ -1,4 +1,4 @@
-package com.example.planner.ui.views;
+package com.example.planner.ui.views.Adapters;
 
 import android.content.Context;
 import android.graphics.Paint;

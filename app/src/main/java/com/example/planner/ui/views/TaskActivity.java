@@ -11,6 +11,7 @@ import android.widget.Button;
 
 import com.example.planner.R;
 import com.example.planner.ui.viewModels.TaskViewModel;
+import com.example.planner.ui.views.Adapters.TasksAdapter;
 
 import java.util.ArrayList;
 
