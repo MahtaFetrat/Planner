@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -37,15 +38,14 @@ public class DailyTaskAdapter extends RecyclerView.Adapter<DailyTaskAdapter.Dail
     @Override
     public void onBindViewHolder(@NonNull DailyTaskViewHolder holder, int position) {
         holder.dailyTaskName.setText(dailyTasks.get(position).getTitle());
-        if (dailyTasks.get(position).isDone()) {
-            holder.dailyTaskIsDone.setChecked(true);
-        }
-        if (holder.dailyTaskIsDone.isChecked()) {
-            holder.dailyTaskName.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-        } else {
-            holder.dailyTaskName.setPaintFlags(0);
-        }
-        holder.dailyTaskIsDone.setOnClickListener(view -> dailyTasks.get(position).setDone(holder.dailyTaskIsDone.isChecked()));
+        holder.dailyTaskIsDone.setOnCheckedChangeListener((compoundButton, b) -> {
+            dailyTasks.get(position).setDone(b);
+            if (b) {
+                holder.dailyTaskName.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+            } else {
+                holder.dailyTaskName.setPaintFlags(0);
+            }
+        });
     }
 
     @Override
