@@ -13,7 +13,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <!-- Priority Colors -->
-    <color name="regular">#51BEC8</color>
+    <color name="regular">#00BDCF</color>
     <color name="important">#FFE78A</color>
     <color name="essential">#E91E63</color>
 </resources>
