@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.planner.R;
 import com.example.planner.ui.viewModels.TaskViewModel;
 import com.example.planner.ui.views.Adapters.TasksAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -27,7 +28,7 @@ import java.util.ArrayList;
 public class TaskFragment extends Fragment {
     private TaskViewModel viewModel;
 
-    private Button createNewTask;
+    private FloatingActionButton createNewTask;
     private RecyclerView tasks;
 
     private TasksAdapter tasksAdapter;
