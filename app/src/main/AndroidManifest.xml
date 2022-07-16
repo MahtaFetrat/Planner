@@ -10,15 +10,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Planner">
         <activity
+            android:name=".ui.views.SettingsActivity"
+            android:exported="false"
+            android:label="@string/settings_activity_title"/>
+        <activity
             android:name=".ui.views.TaskActivity"
             android:exported="false" />
-        <activity android:name=".ui.views.CreateTaskActivity"
+        <activity
+            android:name=".ui.views.CreateTaskActivity"
             android:exported="false" />
         <activity
             android:name=".ui.views.DailyTaskActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.views.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

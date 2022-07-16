@@ -2,7 +2,6 @@ package com.example.planner.ui.views;
 
 import android.app.TimePickerDialog;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.annotation.Nullable;
@@ -14,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.planner.R;
 import com.example.planner.model.DailyTask;
 import com.example.planner.ui.viewModels.TaskViewModel;
+import com.example.planner.ui.views.Adapters.DailyTaskAdapter;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;

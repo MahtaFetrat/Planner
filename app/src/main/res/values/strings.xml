@@ -15,4 +15,11 @@
     <string name="start">Start</string>
     <string name="end">End</string>
     <string name="settings_menu_title">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="theme_header">Theme</string>
+
+    <!-- Theme Preferences -->
+    <string name="theme_title">Select theme</string>
+    <string name="settings_activity_title">Settings</string>
 </resources>
