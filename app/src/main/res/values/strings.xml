@@ -10,4 +10,8 @@
     <string name="regular">Regular</string>
     <string name="important">Important</string>
     <string name="essential">Essential</string>
+    <string name="plus">+</string>
+    <string name="what_else_are_you_gonna_do_today">What else are you gonna do today?</string>
+    <string name="start">Start</string>
+    <string name="end">End</string>
 </resources>

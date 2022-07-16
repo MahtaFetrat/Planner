@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.planner.ui.views.DailyTaskActivity;
 import com.example.planner.ui.views.TaskActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -14,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        startActivity(new Intent(this, TaskActivity.class));
+//        startActivity(new Intent(this, TaskActivity.class));
+        startActivity(new Intent(this, DailyTaskActivity.class));
     }
 }

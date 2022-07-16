@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/OstadeKachal/StudioProjects/Planner/app/src/main/res/layout/activity_daily_task.xml" value="0.365625" />
+        <entry key="..\:/Users/OstadeKachal/StudioProjects/Planner/app/src/main/res/layout/activity_task.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/OstadeKachal/StudioProjects/Planner/app/src/main/res/layout/daily_task_row.xml" value="0.365625" />
         <entry key="..\:/Users/OstadeKachal/StudioProjects/Planner/app/src/main/res/layout/task_row.xml" value="0.7377201112140871" />
         <entry key="app/src/main/res/layout/activity_task.xml" value="0.11851851851851852" />
         <entry key="app/src/main/res/layout/task_row.xml" value="0.333786231884058" />
