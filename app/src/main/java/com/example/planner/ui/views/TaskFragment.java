@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.planner.R;
 import com.example.planner.ui.viewModels.TaskViewModel;
@@ -29,6 +31,7 @@ public class TaskFragment extends Fragment {
     private RecyclerView tasks;
 
     private TasksAdapter tasksAdapter;
+    private LinearLayoutManager taskListLayoutManager;
 
     public TaskFragment() {
         // Required empty public constructor
@@ -66,7 +69,9 @@ public class TaskFragment extends Fragment {
     private void initializeListAdapter() {
         tasksAdapter = new TasksAdapter(getActivity(), new ArrayList<>());
         tasks.setAdapter(tasksAdapter);
-        tasks.setLayoutManager(new LinearLayoutManager(getActivity()));
+        taskListLayoutManager = new LinearLayoutManager(getActivity());
+        taskListLayoutManager.setReverseLayout(true);
+        tasks.setLayoutManager(taskListLayoutManager);
     }
 
     private void setOnClickListeners() {
@@ -79,6 +84,7 @@ public class TaskFragment extends Fragment {
     private void setViewModelObservers() {
         viewModel.getAllTasks().observe(getViewLifecycleOwner(), allTasks -> {
             tasksAdapter.updateList(allTasks);
+            taskListLayoutManager.scrollToPosition(allTasks.size() - 1);
         });
     }
 }

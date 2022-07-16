@@ -9,10 +9,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.planner.R;
+import com.example.planner.model.PriorityLevel;
 import com.example.planner.model.Task;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
@@ -37,20 +40,9 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHol
     @Override
     public void onBindViewHolder(@NonNull TasksViewHolder holder, int position) {
         holder.taskName.setText(tasks.get(position).getTitle());
-        holder.taskDescription.setText(tasks.get(position).getDescription());
-        switch (tasks.get(position).getPriorityLevel()) {
-            case REGULAR:
-                holder.itemView.setBackgroundColor(Color.parseColor("#42F548"));
-                break;
-            case IMPORTANT:
-                holder.itemView.setBackgroundColor(Color.parseColor("#F5f242"));
-                break;
-            case ESSENTIAL:
-                holder.itemView.setBackgroundColor(Color.parseColor("#F84949"));
-                break;
-            default:
-                break;
-        }
+        PriorityLevel priority = tasks.get(position).getPriorityLevel();
+        int priorityColor = (priority == PriorityLevel.REGULAR ? R.color.regular : (priority == PriorityLevel.IMPORTANT ? R.color.important : R.color.essential));
+        holder.taskPriorityColor.setBackgroundColor(ContextCompat.getColor(context, priorityColor));
     }
 
     @Override
@@ -66,13 +58,13 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHol
     public static class TasksViewHolder extends RecyclerView.ViewHolder {
 
         TextView taskName;
-        TextView taskDescription;
-        ConstraintLayout taskLayout;
+        TextView taskPriorityColor;
+        MaterialCardView taskLayout;
 
         public TasksViewHolder(@NonNull View itemView) {
             super(itemView);
             taskName = itemView.findViewById(R.id.taskNameTextView);
-            taskDescription = itemView.findViewById(R.id.taskDescriptionTextView);
+            taskPriorityColor = itemView.findViewById(R.id.taskPriorityColor);
             taskLayout = itemView.findViewById(R.id.taskRowLayout);
         }
     }
