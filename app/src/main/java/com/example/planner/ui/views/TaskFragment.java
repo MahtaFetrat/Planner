@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -77,8 +79,20 @@ public class TaskFragment extends Fragment {
 
     private void setOnClickListeners() {
         createNewTask.setOnClickListener(view -> {
-            Intent intent = new Intent(getActivity(), CreateTaskActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(getActivity(), CreateTaskActivity.class);
+//            startActivity(intent);
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            CreateTaskFragment newFragment = new CreateTaskFragment();
+
+            newFragment.show(fragmentManager, "dialog");
+//            // The device is smaller, so show the fragment fullscreen
+//            FragmentTransaction transaction = fragmentManager.beginTransaction();
+//            // For a little polish, specify a transition animation
+//            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+//            // To make it fullscreen, use the 'content' root view as the container
+//            // for the fragment, which is always the root view for the activity
+//            transaction.add(android.R.id.content, newFragment)
+//                    .addToBackStack(null).commit();
         });
     }
 

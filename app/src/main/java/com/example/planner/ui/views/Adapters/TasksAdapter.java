@@ -58,7 +58,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TasksViewHol
     public static class TasksViewHolder extends RecyclerView.ViewHolder {
 
         TextView taskName;
-        TextView taskPriorityColor;
+        View taskPriorityColor;
         MaterialCardView taskLayout;
 
         public TasksViewHolder(@NonNull View itemView) {

@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Planner</string>
     <string name="tell_me">Tell me what to keep in mind…</string>
-    <string name="task_name">Task name</string>
-    <string name="task_description">Task description…</string>
-    <string name="create_new_task">Create new task</string>
+    <string name="task_input">Enter a title for this task …</string>
+    <string name="task_description">Add a more detailed description …</string>
+    <string name="confirm_add_task">Add Task</string>
     <string name="due_date">Due date</string>
     <string name="set_reminder">Set reminder for…</string>
     <string name="set_priority">Set priority</string>
@@ -30,4 +30,7 @@
     <string name="MotivationFragmentTitle">Motivation</string>
     <string name="DailyFragmentTitle">Today\'s Plan</string>
     <string name="Tasks">Upcoming Tasks</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="cancel">Cancel</string>
 </resources>

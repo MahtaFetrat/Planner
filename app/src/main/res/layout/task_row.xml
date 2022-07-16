@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
-        <TextView
+        <View
             android:id="@+id/taskPriorityColor"
             android:layout_width="5dp"
             android:layout_height="match_parent" />
@@ -20,7 +20,6 @@
             android:id="@+id/taskNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/task_name"
             android:padding="10dp"/>
     </LinearLayout>
 
