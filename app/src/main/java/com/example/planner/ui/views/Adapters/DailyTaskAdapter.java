@@ -41,7 +41,7 @@ public class DailyTaskAdapter extends RecyclerView.Adapter<DailyTaskAdapter.Dail
         holder.dailyTaskIsDone.setOnCheckedChangeListener((compoundButton, b) -> {
             dailyTasks.get(position).setDone(b);
             if (b) {
-                holder.dailyTaskName.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                holder.dailyTaskName.setPaintFlags(holder.dailyTaskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             } else {
                 holder.dailyTaskName.setPaintFlags(0);
             }
