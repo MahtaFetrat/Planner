@@ -47,9 +47,7 @@ public class CreateTaskFragment extends DialogFragment {
     private Button cancelAddTaskButton;
 
     private int year = -1, month = -1, day = -1, hour = 0, minute = 0;
-    private PriorityLevel taskPriority;
-
-    private final SimpleDateFormat formatter = new SimpleDateFormat("MMMM dd yyyy");
+    private PriorityLevel taskPriority = PriorityLevel.REGULAR;
 
     public CreateTaskFragment() {
         // Required empty public constructor
@@ -76,6 +74,7 @@ public class CreateTaskFragment extends DialogFragment {
         findViewsById(view);
         initDatePicker();
         initTimePicker();
+        initRatingBar();
         setOnClickListeners();
     }
 
@@ -120,19 +119,21 @@ public class CreateTaskFragment extends DialogFragment {
         timePickerDialog.setTitle("Reminder");
     }
 
+    private void initRatingBar() {
+        priorityRatingBar.setRating(1);
+        priorityRatingBar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> {
+            if (rating < 1) {
+                ratingBar.setRating(1);
+            }
+            taskPriority = PriorityLevel.values()[(int) (ratingBar.getRating() - 1)];
+        });
+    }
+
     private void setOnClickListeners() {
         dueDateButton.setOnClickListener(view -> {datePickerDialog.show();});
         dueTimeButton.setOnClickListener(view -> {timePickerDialog.show();});
-        priorityRatingBar.setOnClickListener(view -> {setPriorityFromRatingBar((RatingBar) view);});
         createTaskButton.setOnClickListener(view -> {createTask();});
         cancelAddTaskButton.setOnClickListener(view -> {dismiss();});
-    }
-
-    private void setPriorityFromRatingBar(RatingBar ratingBar) {
-        Toast.makeText(getActivity(), String.valueOf(ratingBar.getRating()), Toast.LENGTH_SHORT).show();
-        int index = ratingBar.getRating() == 0 ? 0 : (int) (ratingBar.getRating() - 1);
-        createTaskButton.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.primaryColor));
-        taskPriority = PriorityLevel.values()[index];
     }
 
     private void createTask() {
