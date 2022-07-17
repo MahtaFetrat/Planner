@@ -1,14 +1,27 @@
 package com.example.planner.ui.views;
 
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.planner.R;
+import com.example.planner.model.Motivation;
+import com.example.planner.ui.viewModels.TaskViewModel;
+import com.example.planner.ui.views.Adapters.DailyTaskAdapter;
+import com.example.planner.ui.views.Adapters.MotivationAdapter;
+import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +29,14 @@ import com.example.planner.R;
  * create an instance of this fragment.
  */
 public class MotivationFragment extends Fragment {
+    private View root;
+
+    private TaskViewModel viewModel;
+
+    private Button addMotivation;
+    private TextInputEditText motivationText;
+    private RecyclerView motivations;
+    private MotivationAdapter motivationAdapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -51,16 +72,43 @@ public class MotivationFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
+        findViewsById();
+        setOnClick();
+        initializeListAdapter();
+        setViewModelObservers();
+
+    }
+
+    private void setViewModelObservers() {
+        viewModel.getAllMotivations().observe(this, allMotivations -> {
+            motivationAdapter.updateList(allMotivations);
+        });
+    }
+
+    private void initializeListAdapter() {
+        motivationAdapter = new MotivationAdapter(this.getActivity(), new ArrayList<>());
+        motivations.setAdapter(motivationAdapter);
+        motivations.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+    }
+
+    private void setOnClick() {
+        addMotivation.setOnClickListener(view -> {
+            viewModel.insertMotivation(new Motivation(String.valueOf(motivationText.getText()), ""));
+        });
+    }
+
+    private void findViewsById() {
+        addMotivation = root.findViewById(R.id.addMotivationButton);
+        motivationText = root.findViewById(R.id.motivationTextView);
+        motivations = root.findViewById(R.id.motivationRecyclerView);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_motivation, container, false);
+        root = inflater.inflate(R.layout.fragment_motivation, container, false);
+        return root;
     }
 }
