@@ -41,11 +41,11 @@
 
     <string name="tell_me_about_your_goals_and_manifestos">Tell me about your goals and manifestos</string>
     <string name="dot">.</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="taskDetailDueTimeTitle">Due Time:</string>
     <string name="taskDetailReminderTimeTitle">Reminder:</string>
     <string name="add_new_daily_task_content_descriptor">Add new daily task</string>
     <string name="dailyTaskStartTimeButton">Start Time</string>
     <string name="dailyTaskEndTimeButton">End Time</string>
+    <string name="CreateTaskActivityLabel">Add New Task</string>
 </resources>

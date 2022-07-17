@@ -11,11 +11,14 @@
         android:theme="@style/Theme.Planner">
         <activity
             android:name=".ui.views.CreateDailyTaskActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".ui.views.MainActivity"
+            android:label="@string/CreateTaskActivityLabel" />
         <activity
             android:name=".ui.views.CreateTaskActivity"
             android:exported="false"
-            android:parentActivityName=".ui.views.MainActivity" />
+            android:parentActivityName=".ui.views.MainActivity"
+            android:label="@string/CreateTaskActivityLabel" />
         <activity
             android:name=".ui.views.SettingsActivity"
             android:exported="false"
