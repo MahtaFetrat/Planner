@@ -33,4 +33,5 @@
 
     <string name="cancel">Cancel</string>
     <string name="task_title_required_error">Task title cannot be empty</string>
+    <string name="add_new_task_content_descriptor">Add a new task</string>
 </resources>

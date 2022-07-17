@@ -46,7 +46,7 @@ public class CreateTaskFragment extends DialogFragment {
     private Button createTaskButton;
     private Button cancelAddTaskButton;
 
-    private int year, month, day, hour, minute;
+    private int year = -1, month = -1, day = -1, hour = 0, minute = 0;
     private PriorityLevel taskPriority;
 
     private final SimpleDateFormat formatter = new SimpleDateFormat("MMMM dd yyyy");

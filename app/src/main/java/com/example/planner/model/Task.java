@@ -35,9 +35,12 @@ public class Task implements Comparable<Task> {
     public static Task createNewTask(String title, String description, PriorityLevel priorityLevel, int reminderTimeYear,
                                      int reminderTimeMonth, int reminderTimeDay, int reminderTimeHour, int reminderTimeMinute,
                                      int reminderTimeSecond) {
-        LocalDateTime time = LocalDateTime.of(reminderTimeYear, reminderTimeMonth, reminderTimeDay, reminderTimeHour,
-                reminderTimeMinute, reminderTimeSecond);
-        return new Task(title, description, priorityLevel, time.toString());
+        String timeString = "";
+        if (reminderTimeDay != -1) {
+            timeString = LocalDateTime.of(reminderTimeYear, reminderTimeMonth, reminderTimeDay, reminderTimeHour,
+                    reminderTimeMinute, reminderTimeSecond).toString();
+        }
+        return new Task(title, description, priorityLevel, timeString);
     }
 
     public LocalDateTime getReminderLocalDateTime() {
