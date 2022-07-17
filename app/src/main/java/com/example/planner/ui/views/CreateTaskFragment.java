@@ -7,19 +7,16 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.PopupMenu;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
@@ -28,10 +25,10 @@ import com.example.planner.model.PriorityLevel;
 import com.example.planner.model.Task;
 import com.example.planner.ui.viewModels.TaskViewModel;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 
 
 public class CreateTaskFragment extends DialogFragment {
@@ -40,6 +37,7 @@ public class CreateTaskFragment extends DialogFragment {
     private DatePickerDialog datePickerDialog;
     private TimePickerDialog timePickerDialog;
 
+    private TextInputLayout taskNameInputLayout;
     private TextInputEditText taskNameEditText;
     private TextInputEditText taskDescriptionEditText;
     private AppCompatImageButton dueDateButton;
@@ -82,6 +80,7 @@ public class CreateTaskFragment extends DialogFragment {
     }
 
     private void findViewsById(View view) {
+        taskNameInputLayout = view.findViewById(R.id.taskNameInputLayout);
         taskNameEditText = view.findViewById(R.id.newTaskNameTextInputEditText);
         taskDescriptionEditText = view.findViewById(R.id.newTaskDescriptionTextInputEditText);
         dueDateButton = view.findViewById(R.id.taskDateInput);
@@ -137,13 +136,24 @@ public class CreateTaskFragment extends DialogFragment {
     }
 
     private void createTask() {
-        String name = String.valueOf(this.taskNameEditText.getText());
-        String description = String.valueOf(taskDescriptionEditText.getText());
+        if (validateTaskFrom()) {
+            String name = String.valueOf(this.taskNameEditText.getText());
+            String description = String.valueOf(taskDescriptionEditText.getText());
 
-        Task newTask = Task.createNewTask(name, description, taskPriority, year, month, day, hour, minute, 0);
-        viewModel.insert(newTask);
+            Task newTask = Task.createNewTask(name, description, taskPriority, year, month, day, hour, minute, 0);
+            viewModel.insert(newTask);
 
-        dismiss();
+            dismiss();
+        }
+    }
+
+    private boolean validateTaskFrom() {
+        if (taskNameEditText.getText().toString().isEmpty()) {
+            taskNameInputLayout.setError(getResources().getString(R.string.task_title_required_error));
+            taskNameInputLayout.setErrorEnabled(true);
+            return false;
+        }
+        return true;
     }
 
     @NonNull

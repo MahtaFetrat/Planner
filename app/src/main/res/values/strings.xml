@@ -30,7 +30,7 @@
     <string name="MotivationFragmentTitle">Motivation</string>
     <string name="DailyFragmentTitle">Today\'s Plan</string>
     <string name="Tasks">Upcoming Tasks</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="cancel">Cancel</string>
+    <string name="task_title_required_error">Task title cannot be empty</string>
 </resources>
