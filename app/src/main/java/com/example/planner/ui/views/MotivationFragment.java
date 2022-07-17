@@ -3,6 +3,7 @@ package com.example.planner.ui.views;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -29,8 +30,6 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class MotivationFragment extends Fragment {
-    private View root;
-
     private TaskViewModel viewModel;
 
     private Button addMotivation;
@@ -72,12 +71,6 @@ public class MotivationFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        findViewsById();
-        setOnClick();
-        initializeListAdapter();
-        setViewModelObservers();
-
     }
 
     private void setViewModelObservers() {
@@ -92,23 +85,34 @@ public class MotivationFragment extends Fragment {
         motivations.setLayoutManager(new LinearLayoutManager(this.getActivity()));
     }
 
-    private void setOnClick() {
+    private void setOnClickListeners() {
         addMotivation.setOnClickListener(view -> {
             viewModel.insertMotivation(new Motivation(String.valueOf(motivationText.getText()), ""));
         });
     }
 
-    private void findViewsById() {
-        addMotivation = root.findViewById(R.id.addMotivationButton);
-        motivationText = root.findViewById(R.id.motivationTextView);
-        motivations = root.findViewById(R.id.motivationRecyclerView);
+    private void findViewsById(View view) {
+        addMotivation = view.findViewById(R.id.addMotivationButton);
+        motivationText = view.findViewById(R.id.motivationTextInputEditText);
+        motivations = view.findViewById(R.id.motivationRecyclerView);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        root = inflater.inflate(R.layout.fragment_motivation, container, false);
-        return root;
+        return inflater.inflate(R.layout.fragment_motivation, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        viewModel = new ViewModelProvider(requireActivity()).get(TaskViewModel.class);
+
+        findViewsById(view);
+        initializeListAdapter();
+        setOnClickListeners();
+        setViewModelObservers();
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,7 +48,7 @@ public class MotivationAdapter extends RecyclerView.Adapter<MotivationAdapter.Mo
     }
 
     public class MotivationViewHolder extends RecyclerView.ViewHolder {
-        TextInputEditText motivationText;
+        TextView motivationText;
 
         public MotivationViewHolder(@NonNull View itemView) {
             super(itemView);
