@@ -5,19 +5,17 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.example.planner.R;
 import com.example.planner.ui.viewModels.TaskViewModel;
@@ -31,7 +29,7 @@ public class TaskFragment extends Fragment {
     private TaskViewModel viewModel;
 
     private FloatingActionButton createNewTask;
-    private RecyclerView tasks;
+    private RecyclerView tasksRecyclerView;
 
     private TasksAdapter tasksAdapter;
     private LinearLayoutManager taskListLayoutManager;
@@ -66,15 +64,15 @@ public class TaskFragment extends Fragment {
 
     private void findViewsById(View view) {
         createNewTask = view.findViewById(R.id.createNewTaskButton);
-        tasks = view.findViewById(R.id.tasksRecyclerView);
+        tasksRecyclerView = view.findViewById(R.id.tasksRecyclerView);
     }
 
     private void initializeListAdapter() {
         tasksAdapter = new TasksAdapter(getActivity(), new ArrayList<>());
-        tasks.setAdapter(tasksAdapter);
+        tasksRecyclerView.setAdapter(tasksAdapter);
         taskListLayoutManager = new LinearLayoutManager(getActivity());
         taskListLayoutManager.setReverseLayout(true);
-        tasks.setLayoutManager(taskListLayoutManager);
+        tasksRecyclerView.setLayoutManager(taskListLayoutManager);
     }
 
     private void setOnClickListeners() {

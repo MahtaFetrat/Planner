@@ -68,4 +68,6 @@ public class Repository {
     public void deleteMotivation(Motivation motivation) {
         db.plannerDao().delete(motivation);
     }
+
+    public Task getTaskById(int id) { return db.plannerDao().getTaskById(id); }
 }

@@ -32,7 +32,7 @@ public class TaskViewModel extends AndroidViewModel {
     public void insert(Task task) {
         repository.insertTask(task);
     }
-    public void deleteWord(Task task) {
+    public void deleteTask(Task task) {
         repository.deleteTask(task);
     }
 
@@ -55,4 +55,6 @@ public class TaskViewModel extends AndroidViewModel {
     public void deleteMotivation(Motivation motivation) {
         repository.deleteMotivation(motivation);
     }
+
+    public Task getTaskById(int id) { return repository.getTaskById(id); }
 }

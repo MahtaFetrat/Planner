@@ -51,4 +51,7 @@ public interface PlannerDao {
 
     @Update
     void update(Motivation motivation);
+
+    @Query("SELECT * FROM task WHERE id =:id")
+    Task getTaskById(int id);
 }
