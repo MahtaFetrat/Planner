@@ -97,7 +97,7 @@ public class CreateTaskFragment extends DialogFragment {
             calendar.set(Calendar.DAY_OF_MONTH, d);
 
             year = y;
-            month = m;
+            month = m + 1;
             day = d;
         };
 
