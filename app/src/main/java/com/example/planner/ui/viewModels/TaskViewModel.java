@@ -45,6 +45,7 @@ public class TaskViewModel extends AndroidViewModel {
     public void deleteDailyWord(DailyTask dailyTask) {
         repository.deleteDailyTask(dailyTask);
     }
+    public void updateDailyTask(DailyTask dailyTask) { repository.updateDailyTask(dailyTask); }
 
     public LiveData<List<Motivation>> getAllMotivations() {
         return allMotivations;

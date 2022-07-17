@@ -70,4 +70,6 @@ public class Repository {
     }
 
     public Task getTaskById(int id) { return db.plannerDao().getTaskById(id); }
+
+    public void updateDailyTask(DailyTask dailyTask) { db.plannerDao().update(dailyTask); }
 }

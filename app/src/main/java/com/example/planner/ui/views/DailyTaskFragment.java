@@ -70,7 +70,7 @@ public class DailyTaskFragment extends Fragment {
     }
 
     private void initializeListAdapter() {
-        dailyTaskAdapter = new DailyTaskAdapter(getActivity(), new ArrayList<>());
+        dailyTaskAdapter = new DailyTaskAdapter(getActivity(), new ArrayList<>(), viewModel);
         dailyTasks.setAdapter(dailyTaskAdapter);
         dailyTasks.setLayoutManager(new LinearLayoutManager(getActivity()));
     }

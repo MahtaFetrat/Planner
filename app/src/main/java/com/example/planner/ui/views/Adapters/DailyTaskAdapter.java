@@ -14,17 +14,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.planner.R;
 import com.example.planner.model.DailyTask;
+import com.example.planner.ui.viewModels.TaskViewModel;
 
 import java.util.List;
 
 public class DailyTaskAdapter extends RecyclerView.Adapter<DailyTaskAdapter.DailyTaskViewHolder> {
     private final Context context;
     private List<DailyTask> dailyTasks;
+    private TaskViewModel viewModel;
 
 
-    public DailyTaskAdapter(Context ct, List<DailyTask> dailyTsk) {
+    public DailyTaskAdapter(Context ct, List<DailyTask> dailyTsk, TaskViewModel vm) {
         dailyTasks = dailyTsk;
         context = ct;
+        viewModel = vm;
     }
 
     @NonNull
@@ -38,8 +41,16 @@ public class DailyTaskAdapter extends RecyclerView.Adapter<DailyTaskAdapter.Dail
     @Override
     public void onBindViewHolder(@NonNull DailyTaskViewHolder holder, int position) {
         holder.dailyTaskName.setText(dailyTasks.get(position).getTitle());
+        holder.dailyTaskIsDone.setChecked(dailyTasks.get(position).isDone());
+        if (dailyTasks.get(position).isDone()) {
+            holder.dailyTaskName.setPaintFlags(holder.dailyTaskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        } else {
+            holder.dailyTaskName.setPaintFlags(0);
+        }
+
         holder.dailyTaskIsDone.setOnCheckedChangeListener((compoundButton, b) -> {
             dailyTasks.get(position).setDone(b);
+            viewModel.updateDailyTask(dailyTasks.get(position));
             if (b) {
                 holder.dailyTaskName.setPaintFlags(holder.dailyTaskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             } else {
