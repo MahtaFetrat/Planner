@@ -60,4 +60,6 @@ public class TaskViewModel extends AndroidViewModel {
     public Task getTaskById(int id) { return repository.getTaskById(id); }
 
     public DailyTask getDailyTaskViewById(int taskId) { return repository.getDailyTaskViewById(taskId); }
+
+    public Motivation getMotivationById(int motivationId) { return repository.getMotivationById(motivationId); }
 }

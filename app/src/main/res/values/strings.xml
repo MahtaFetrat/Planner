@@ -57,4 +57,6 @@
     <string name="dailyTaskDetailEndTimeTitle">End Time:</string>
     <string name="motivationEditTextHint">Write down something that motivates you …</string>
     <string name="createMotivationActivityLabel">New Motivation</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -57,4 +57,7 @@ public interface PlannerDao {
 
     @Query("SELECT * FROM DailyTask WHERE id =:id")
     DailyTask getDailyTaskViewById(int id);
+
+    @Query("SELECT * FROM Motivation WHERE id =:id")
+    Motivation getMotivationById(int id);
 }

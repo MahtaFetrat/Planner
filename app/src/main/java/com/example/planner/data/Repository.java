@@ -74,4 +74,6 @@ public class Repository {
     public void updateDailyTask(DailyTask dailyTask) { db.plannerDao().update(dailyTask); }
 
     public DailyTask getDailyTaskViewById(int taskId) { return db.plannerDao().getDailyTaskViewById(taskId); }
+
+    public Motivation getMotivationById(int motivationId) { return db.plannerDao().getMotivationById(motivationId); }
 }
