@@ -1,5 +1,6 @@
 package com.example.planner.ui.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.planner.R;
-import com.example.planner.model.DailyTask;
 import com.example.planner.ui.viewModels.TaskViewModel;
 import com.example.planner.ui.views.Adapters.DailyTaskAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -34,7 +34,7 @@ public class DailyTaskFragment extends Fragment {
 //    private TextInputEditText dailyTaskName;
     private RecyclerView dailyTasks;
     private DailyTaskAdapter dailyTaskAdapter;
-    private FloatingActionButton createNewDailyTaskButton;
+    private FloatingActionButton createDailyTaskButton;
 
 //    private int startHour, startMinute, endHour, endMinute;
 
@@ -74,10 +74,14 @@ public class DailyTaskFragment extends Fragment {
 //        endTime = view.findViewById(R.id.endTimeButton);
 //        dailyTaskName = view.findViewById(R.id.dailyTaskNameTextInputEditText);
         dailyTasks = view.findViewById(R.id.dailyTasksRecyclerView);
-        createNewDailyTaskButton = view.findViewById(R.id.createNewDailyTaskButton);
+        createDailyTaskButton = view.findViewById(R.id.createNewDailyTaskButton);
     }
 
     private void setOnClickListeners() {
+        createDailyTaskButton.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), CreateDailyTaskActivity.class);
+            startActivity(intent);
+        });
 //        addDailyTask.setOnClickListener(view -> {
 //            String newDailyTaskName = String.valueOf(dailyTaskName.getText());
 //

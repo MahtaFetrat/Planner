@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Planner">
         <activity
+            android:name=".ui.views.CreateDailyTaskActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.views.CreateTaskActivity"
             android:exported="false"
             android:parentActivityName=".ui.views.MainActivity" />
