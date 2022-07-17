@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import com.example.planner.R;
 import com.example.planner.ui.viewModels.TaskViewModel;
 import com.example.planner.ui.views.Adapters.TasksAdapter;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -33,6 +34,8 @@ public class TaskFragment extends Fragment {
 
     private TasksAdapter tasksAdapter;
     private LinearLayoutManager taskListLayoutManager;
+
+    private MaterialCardView listShadow;
 
     public TaskFragment() {
         // Required empty public constructor
@@ -65,6 +68,7 @@ public class TaskFragment extends Fragment {
     private void findViewsById(View view) {
         createNewTask = view.findViewById(R.id.createNewTaskButton);
         tasksRecyclerView = view.findViewById(R.id.tasksRecyclerView);
+        listShadow = view.findViewById(R.id.listShadow);
     }
 
     private void initializeListAdapter() {
@@ -84,6 +88,7 @@ public class TaskFragment extends Fragment {
 
     private void setViewModelObservers() {
         viewModel.getAllTasks().observe(getViewLifecycleOwner(), allTasks -> {
+            listShadow.setVisibility(allTasks.isEmpty() ? View.INVISIBLE : View.VISIBLE);
             tasksAdapter.updateList(allTasks);
             taskListLayoutManager.scrollToPosition(allTasks.size() - 1);
         });
