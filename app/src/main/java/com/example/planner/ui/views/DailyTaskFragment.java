@@ -25,18 +25,9 @@ import java.util.ArrayList;
 public class DailyTaskFragment extends Fragment {
     private TaskViewModel viewModel;
 
-//    private TimePickerDialog startTimePickerDialog;
-//    private TimePickerDialog endTimePickerDialog;
-
-//    private Button addDailyTask;
-//    private Button startTime;
-//    private Button endTime;
-//    private TextInputEditText dailyTaskName;
     private RecyclerView dailyTasks;
     private DailyTaskAdapter dailyTaskAdapter;
     private FloatingActionButton createDailyTaskButton;
-
-//    private int startHour, startMinute, endHour, endMinute;
 
     public DailyTaskFragment() {
         // Required empty public constructor
@@ -62,17 +53,11 @@ public class DailyTaskFragment extends Fragment {
 
         findViewsById(view);
         setOnClickListeners();
-        initStartTimePicker();
-        initEndTimePicker();
         initializeListAdapter();
         setViewModelObservers();
     }
 
     private void findViewsById(View view) {
-//        addDailyTask = view.findViewById(R.id.addDailyTaskButton);
-//        startTime = view.findViewById(R.id.startTimeButton);
-//        endTime = view.findViewById(R.id.endTimeButton);
-//        dailyTaskName = view.findViewById(R.id.dailyTaskNameTextInputEditText);
         dailyTasks = view.findViewById(R.id.dailyTasksRecyclerView);
         createDailyTaskButton = view.findViewById(R.id.createNewDailyTaskButton);
     }
@@ -82,15 +67,6 @@ public class DailyTaskFragment extends Fragment {
             Intent intent = new Intent(getActivity(), CreateDailyTaskActivity.class);
             startActivity(intent);
         });
-//        addDailyTask.setOnClickListener(view -> {
-//            String newDailyTaskName = String.valueOf(dailyTaskName.getText());
-//
-//            DailyTask newDailyTask = DailyTask.createNewDailyTask(newDailyTaskName, "", startHour, startMinute, 0, endHour, endMinute, 0, false);
-//            viewModel.insertDaily(newDailyTask);
-//        });
-//
-//        startTime.setOnClickListener(view -> startTimePickerDialog.show());
-//        endTime.setOnClickListener(view -> endTimePickerDialog.show());
     }
 
     private void initializeListAdapter() {
@@ -103,27 +79,5 @@ public class DailyTaskFragment extends Fragment {
         viewModel.getAllDailyTasks().observe(getActivity(), allDailyTasks -> {
             dailyTaskAdapter.updateList(allDailyTasks);
         });
-    }
-
-    private void initStartTimePicker() {
-//        TimePickerDialog.OnTimeSetListener timeSetListener = (timePicker, h, m) -> {
-//            startTime.setText(String.format(Locale.getDefault(), "%02d:%02d", h, m));
-//            startHour = h;
-//            startMinute = m;
-//        };
-//
-//        startTimePickerDialog = new TimePickerDialog(getActivity(), timeSetListener, startHour, startMinute, true);
-//        startTimePickerDialog.setTitle("Start");
-    }
-
-    private void initEndTimePicker() {
-//        TimePickerDialog.OnTimeSetListener timeSetListener = (timePicker, h, m) -> {
-//            endTime.setText(String.format(Locale.getDefault(), "%02d:%02d", h, m));
-//            endHour = h;
-//            endMinute = m;
-//        };
-//
-//        endTimePickerDialog = new TimePickerDialog(getActivity(), timeSetListener, endHour, endMinute, true);
-//        endTimePickerDialog.setTitle("End");
     }
 }

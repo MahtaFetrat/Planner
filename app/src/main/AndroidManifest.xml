@@ -21,9 +21,6 @@
             android:exported="false"
             android:label="@string/settings_activity_title" />
         <activity
-            android:name=".ui.views.DailyTaskActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.views.MainActivity"
             android:exported="true">
             <intent-filter>
