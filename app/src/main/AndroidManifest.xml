@@ -10,9 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Planner">
         <activity
+            android:name=".ui.views.CreateTaskActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.views.MainActivity" />
+        <activity
             android:name=".ui.views.SettingsActivity"
             android:exported="false"
-            android:label="@string/settings_activity_title"/>
+            android:label="@string/settings_activity_title" />
         <activity
             android:name=".ui.views.DailyTaskActivity"
             android:exported="false" />

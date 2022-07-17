@@ -3,7 +3,6 @@
     <string name="tell_me">Tell me what to keep in mind…</string>
     <string name="task_input">Enter a title for this task …</string>
     <string name="task_description">Add a more detailed description …</string>
-    <string name="confirm_add_task">Add Task</string>
     <string name="due_date">Due date</string>
     <string name="set_reminder">Set reminder for…</string>
     <string name="set_priority">Set priority</string>
@@ -31,7 +30,12 @@
     <string name="DailyFragmentTitle">Today\'s Plan</string>
     <string name="Tasks">Upcoming Tasks</string>
 
-    <string name="cancel">Cancel</string>
+    <!-- New task form -->
     <string name="task_title_required_error">Task title cannot be empty</string>
     <string name="add_new_task_content_descriptor">Add a new task</string>
+    <string name="confirm_form_button">Confirm</string>
+    <string name="dueDateFormatSpecifier">Due Date: %1$s</string>
+    <string name="dueTimeFormatSpecifier">Due Time: %1$s</string>
+    <string name="reminderDateFormatSpecifier">Reminder Date: %1$s</string>
+    <string name="reminderTimeFormatSpecifier">Reminder Time: %1$s</string>
 </resources>

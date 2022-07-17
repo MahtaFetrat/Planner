@@ -19,7 +19,7 @@ public interface PlannerDao {
     @Query("SELECT * FROM DailyTask ORDER BY startTime ASC")
     LiveData<List<DailyTask>> getAllDailyTasks();
 
-    @Query("SELECT * FROM task ORDER BY CASE WHEN reminderTime='' THEN '9999' ELSE reminderTime END DESC, priorityLevel DESC")
+    @Query("SELECT * FROM task ORDER BY CASE WHEN dueTime='' THEN '9999' ELSE dueTime END DESC, priorityLevel DESC")
     LiveData<List<Task>> getAllTasks();
 
     @Query("SELECT * FROM Motivation")

@@ -5,7 +5,6 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @Entity
 public class Task implements Comparable<Task> {
@@ -23,28 +22,41 @@ public class Task implements Comparable<Task> {
     private PriorityLevel priorityLevel;
 
     @ColumnInfo
+    private String dueTime;
+
+    @ColumnInfo
+    private Boolean hasReminder;
+
+    @ColumnInfo
     private String reminderTime;
 
-    public Task(String title, String description, PriorityLevel priorityLevel, String reminderTime) {
+    public Task(String title, String description, PriorityLevel priorityLevel, String dueTime, boolean hasReminder, String reminderTime) {
         this.title = title;
         this.description = description;
         this.priorityLevel = priorityLevel;
+        this.dueTime = dueTime;
+        this.hasReminder = hasReminder;
         this.reminderTime = reminderTime;
     }
 
-    public static Task createNewTask(String title, String description, PriorityLevel priorityLevel, int reminderTimeYear,
-                                     int reminderTimeMonth, int reminderTimeDay, int reminderTimeHour, int reminderTimeMinute,
-                                     int reminderTimeSecond) {
-        String timeString = "";
-        if (reminderTimeDay != -1) {
-            timeString = LocalDateTime.of(reminderTimeYear, reminderTimeMonth, reminderTimeDay, reminderTimeHour,
-                    reminderTimeMinute, reminderTimeSecond).toString();
-        }
-        return new Task(title, description, priorityLevel, timeString);
+    public static Task createNewTask(String title, String description, PriorityLevel priorityLevel,
+                                     int dueYear, int dueMonth, int dueDay, int dueHour, int dueMinute, int dueSecond, boolean hasReminder,
+                                     int reminderYear, int reminderMonth, int reminderDay, int reminderHour, int reminderMinute, int reminderSecond) {
+        String dueTimeString = LocalDateTime.of(dueYear, dueMonth, dueDay, dueHour, dueMinute, dueSecond).toString();
+        String reminderTimeString = LocalDateTime.of(reminderYear, reminderMonth, reminderDay, reminderHour, reminderMinute, reminderSecond).toString();
+        return new Task(title, description, priorityLevel, dueTimeString, hasReminder, reminderTimeString);
+    }
+
+    public LocalDateTime getDueDateLocalDateTime() {
+        return LocalDateTime.parse(dueTime);
     }
 
     public LocalDateTime getReminderLocalDateTime() {
         return LocalDateTime.parse(reminderTime);
+    }
+
+    public void setDueDateLocalDateTime(LocalDateTime time) {
+        this.dueTime = time.toString();
     }
 
     public void setReminderLocalDateTime(LocalDateTime time) {
@@ -83,6 +95,14 @@ public class Task implements Comparable<Task> {
         this.priorityLevel = priorityLevel;
     }
 
+    public String getDueTime() {
+        return dueTime;
+    }
+
+    public void setDueTime(String dueTime) {
+        this.dueTime = dueTime;
+    }
+
     public String getReminderTime() {
         return reminderTime;
     }
@@ -91,10 +111,18 @@ public class Task implements Comparable<Task> {
         this.reminderTime = reminderTime;
     }
 
+    public Boolean getHasReminder() {
+        return hasReminder;
+    }
+
+    public void setHasReminder(Boolean hasReminder) {
+        this.hasReminder = hasReminder;
+    }
+
     @Override
     public int compareTo(Task task) {
-        LocalDateTime thisTime = LocalDateTime.parse(this.reminderTime);
-        LocalDateTime taskTime = LocalDateTime.parse(task.reminderTime);
+        LocalDateTime thisTime = LocalDateTime.parse(this.dueTime);
+        LocalDateTime taskTime = LocalDateTime.parse(task.dueTime);
         if (thisTime.getYear() == taskTime.getYear()) {
             if (thisTime.getMonthValue() == taskTime.getMonthValue()) {
                 if (thisTime.getDayOfMonth() == taskTime.getDayOfMonth()) {

@@ -79,10 +79,8 @@ public class TaskFragment extends Fragment {
 
     private void setOnClickListeners() {
         createNewTask.setOnClickListener(view -> {
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            CreateTaskFragment newFragment = new CreateTaskFragment();
-
-            newFragment.show(fragmentManager, "dialog");
+            Intent intent = new Intent(getActivity(), CreateTaskActivity.class);
+            startActivity(intent);
         });
     }
 
