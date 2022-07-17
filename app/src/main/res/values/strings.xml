@@ -38,4 +38,7 @@
     <string name="dueTimeFormatSpecifier">Due Time: %1$s</string>
     <string name="reminderDateFormatSpecifier">Reminder Date: %1$s</string>
     <string name="reminderTimeFormatSpecifier">Reminder Time: %1$s</string>
+
+    <string name="tell_me_about_your_goals_and_manifestos">Tell me about your goals and manifestos</string>
+    <string name="dot">.</string>
 </resources>
