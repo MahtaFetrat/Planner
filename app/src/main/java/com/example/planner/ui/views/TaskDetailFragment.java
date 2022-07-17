@@ -41,7 +41,7 @@ public class TaskDetailFragment extends DialogFragment {
 
     AppCompatImageButton taskDetailDeleteButton;
 
-    DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMMM dd yyyy HH:mm");
+    DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
     DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
     public TaskDetailFragment() {
