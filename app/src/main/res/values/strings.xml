@@ -42,10 +42,17 @@
     <string name="tell_me_about_your_goals_and_manifestos">Tell me about your goals and manifestos</string>
     <string name="dot">.</string>
 
+    <!-- Task Detail -->
     <string name="taskDetailDueTimeTitle">Due Time:</string>
     <string name="taskDetailReminderTimeTitle">Reminder:</string>
     <string name="add_new_daily_task_content_descriptor">Add new daily task</string>
+
+    <!-- Create DailyTask -->
     <string name="dailyTaskStartTimeButton">Start Time</string>
     <string name="dailyTaskEndTimeButton">End Time</string>
     <string name="CreateTaskActivityLabel">Add New Task</string>
+
+    <!-- DailyTask Detail -->
+    <string name="dailyTaskDetailStartTimeTitle">Start Time:</string>
+    <string name="dailyTaskDetailEndTimeTitle">End Time:</string>
 </resources>

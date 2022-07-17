@@ -1,14 +1,13 @@
 package com.example.planner.ui.views;
 
 import android.app.Dialog;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageButton;
-import androidx.appcompat.widget.LinearLayoutCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -18,36 +17,33 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.RatingBar;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.example.planner.R;
+import com.example.planner.model.DailyTask;
 import com.example.planner.model.PriorityLevel;
-import com.example.planner.model.Task;
 import com.example.planner.ui.viewModels.TaskViewModel;
 
 import java.time.format.DateTimeFormatter;
 
-public class TaskDetailFragment extends DialogFragment {
+
+public class DailyTaskDetailFragment extends DialogFragment {
 
     TaskViewModel viewModel;
-    Task task;
+    DailyTask dailyTask;
 
     TextView taskTitle;
     TextView taskDescription;
-    TextView taskDueDate;
-    TextView taskDueTime;
-    TextView taskReminderDate;
-    TextView taskReminderTime;
-    RatingBar taskRating;
-    LinearLayoutCompat taskDetailReminderDateTimeLayout;
+    TextView taskStartTime;
+    TextView taskEndTime;
+    CheckBox taskIsDone;
 
     AppCompatImageButton taskDetailDeleteButton;
 
-    DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
     DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
-    public TaskDetailFragment() {
+    public DailyTaskDetailFragment() {
         // Required empty public constructor
     }
 
@@ -59,7 +55,8 @@ public class TaskDetailFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_task_detail, container, false);
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_daily_task_detail, container, false);
     }
 
     @Override
@@ -69,7 +66,7 @@ public class TaskDetailFragment extends DialogFragment {
         viewModel = new ViewModelProvider(requireActivity()).get(TaskViewModel.class);
 
         int taskId = getArguments().getInt("taskId");
-        task = viewModel.getTaskById(taskId);
+        dailyTask = viewModel.getDailyTaskViewById(taskId);
 
         findViewsById(view);
         setTaskDetailFieldValues();
@@ -77,30 +74,26 @@ public class TaskDetailFragment extends DialogFragment {
     }
 
     private void findViewsById(View view) {
-        taskTitle = view.findViewById(R.id.taskDetailTitle);
-        taskDescription = view.findViewById(R.id.taskDetailDescription);
-        taskDueDate = view.findViewById(R.id.taskDetailDueDate);
-        taskDueTime = view.findViewById(R.id.taskDetailDueTime);
-        taskReminderDate = view.findViewById(R.id.taskDetailReminderDate);
-        taskReminderTime = view.findViewById(R.id.taskDetailReminderTime);
-        taskRating = view.findViewById(R.id.taskDetailRatingBar);
-        taskDetailReminderDateTimeLayout = view.findViewById(R.id.taskDetailReminderDateTimeLayout);
+        taskTitle = view.findViewById(R.id.dailyTaskDetailTitle);
+        taskDescription = view.findViewById(R.id.dailyTaskDetailDescription);
+        taskStartTime = view.findViewById(R.id.dailyTaskDetailStartTime);
+        taskEndTime = view.findViewById(R.id.dailyTaskDetailEndTime);
+        taskIsDone = view.findViewById(R.id.dailyTaskDetailIsDone);
 
-        taskDetailDeleteButton = view.findViewById(R.id.taskDetailDeleteButton);
+        taskDetailDeleteButton = view.findViewById(R.id.dailyTaskDetailDeleteButton);
     }
 
     private void setTaskDetailFieldValues() {
-        taskTitle.setText(task.getTitle());
-        taskDescription.setText(task.getTitle());
-        taskDueDate.setText(dateFormatter.format(task.getDueDateLocalDateTime()));
-        taskDueTime.setText(timeFormatter.format(task.getDueDateLocalDateTime()));
-        if (task.getHasReminder()) {
-            taskDetailReminderDateTimeLayout.setVisibility(View.VISIBLE);
-            taskReminderDate.setText(dateFormatter.format(task.getDueDateLocalDateTime()));
-            taskReminderTime.setText(timeFormatter.format(task.getReminderLocalDateTime()));
+        taskTitle.setText(dailyTask.getTitle());
+        taskDescription.setText(dailyTask.getTitle());
+        taskStartTime.setText(timeFormatter.format(dailyTask.getStartLocalTime()));
+        taskEndTime.setText(timeFormatter.format(dailyTask.getEndLocalTime()));
+        taskIsDone.setChecked(dailyTask.isDone());
+        if (dailyTask.isDone()) {
+            taskTitle.setPaintFlags(taskTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        } else {
+            taskTitle.setPaintFlags(0);
         }
-        PriorityLevel priority = task.getPriorityLevel();
-        taskRating.setRating(priority == PriorityLevel.REGULAR ? 1 : priority == PriorityLevel.IMPORTANT ? 2 : 3);
     }
 
     private void setOnClickListeners() {
@@ -108,7 +101,7 @@ public class TaskDetailFragment extends DialogFragment {
     }
 
     private void deleteTask() {
-        viewModel.deleteTask(task);
+        viewModel.deleteDailyWord(dailyTask);
         dismiss();
     }
 

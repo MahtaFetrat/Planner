@@ -2,6 +2,7 @@ package com.example.planner.ui.views.Adapters;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +11,15 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.planner.R;
 import com.example.planner.model.DailyTask;
 import com.example.planner.ui.viewModels.TaskViewModel;
+import com.example.planner.ui.views.DailyTaskDetailFragment;
+import com.example.planner.ui.views.TaskDetailFragment;
 
 import java.util.List;
 
@@ -57,6 +62,16 @@ public class DailyTaskAdapter extends RecyclerView.Adapter<DailyTaskAdapter.Dail
                 holder.dailyTaskName.setPaintFlags(0);
             }
         });
+
+        holder.view.setOnClickListener(view -> {
+            FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+            DailyTaskDetailFragment dailyTaskDetailFragment = new DailyTaskDetailFragment();
+            Bundle bundle = new Bundle();
+            bundle.putInt("taskId", dailyTasks.get(position).getId());
+            dailyTaskDetailFragment.setArguments(bundle);
+
+            dailyTaskDetailFragment.show(fragmentManager, "dialog");
+        });
     }
 
     @Override
@@ -73,9 +88,11 @@ public class DailyTaskAdapter extends RecyclerView.Adapter<DailyTaskAdapter.Dail
 
         TextView dailyTaskName;
         CheckBox dailyTaskIsDone;
+        View view;
 
         public DailyTaskViewHolder(@NonNull View itemView) {
             super(itemView);
+            view = itemView;
             dailyTaskName = itemView.findViewById(R.id.dailyTaskTextView);
             dailyTaskIsDone = itemView.findViewById(R.id.dailyTaskCheckBox);
         }
