@@ -1,53 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".ui.views.MotivationFragment">
+
+<com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:id="@+id/createMotivationButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:src="@drawable/ic_baseline_add_24"
+    android:contentDescription="@string/add_new_daily_task_content_descriptor"
+    android:layout_marginEnd="10dp"
+    android:layout_marginBottom="15dp"/>
+
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/motivationRecyclerView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.views.MotivationFragment">
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="10dp"/>
 
-    <!-- TODO: Update blank fragment layout -->
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="motivation" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/motivationRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
-            tools:layout_editor_absoluteX="0dp" />
-
-        <Button
-            android:id="@+id/addMotivationButton"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:text="@string/plus"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/motivationRecyclerView" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/motivationTextInputEditText"
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/tell_me_about_your_goals_and_manifestos"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/addMotivationButton"
-            app:layout_constraintTop_toBottomOf="@+id/motivationRecyclerView" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
