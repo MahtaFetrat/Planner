@@ -55,4 +55,6 @@
     <!-- DailyTask Detail -->
     <string name="dailyTaskDetailStartTimeTitle">Start Time:</string>
     <string name="dailyTaskDetailEndTimeTitle">End Time:</string>
+    <string name="motivationEditTextHint">Write down something that motivates you …</string>
+    <string name="createMotivationActivityLabel">New Motivation</string>
 </resources>

@@ -11,7 +11,10 @@
         android:theme="@style/Theme.Planner">
         <activity
             android:name=".ui.views.CreateMotivationActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/createMotivationActivityLabel"
+            android:parentActivityName=".ui.views.MainActivity"/>
+
         <activity
             android:name=".ui.views.CreateDailyTaskActivity"
             android:exported="false"
