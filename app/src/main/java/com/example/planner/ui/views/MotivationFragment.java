@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.planner.R;
-import com.example.planner.model.Motivation;
 import com.example.planner.ui.viewModels.TaskViewModel;
 import com.example.planner.ui.views.Adapters.MotivationAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

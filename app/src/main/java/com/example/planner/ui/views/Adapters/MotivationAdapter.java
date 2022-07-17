@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.planner.R;
 import com.example.planner.model.Motivation;
-import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.List;
 
@@ -34,7 +33,7 @@ public class MotivationAdapter extends RecyclerView.Adapter<MotivationAdapter.Mo
 
     @Override
     public void onBindViewHolder(@NonNull MotivationViewHolder holder, int position) {
-        holder.motivationText.setText(motivations.get(position).getTitle());
+        holder.motivationText.setText(motivations.get(position).getSentence());
     }
 
     @Override

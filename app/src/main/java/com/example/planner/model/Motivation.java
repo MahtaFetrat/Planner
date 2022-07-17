@@ -11,14 +11,10 @@ public class Motivation {
     private int id;
 
     @ColumnInfo
-    private String title;
+    private String sentence;
 
-    @ColumnInfo
-    private String description;
-
-    public Motivation(String title, String description) {
-        this.title = title;
-        this.description = description;
+    public Motivation(String sentence) {
+        this.sentence = sentence;
     }
 
     public int getId() {
@@ -29,19 +25,11 @@ public class Motivation {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getSentence() {
+        return sentence;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setSentence(String sentence) {
+        this.sentence = sentence;
     }
 }
