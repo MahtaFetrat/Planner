@@ -7,10 +7,13 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -129,6 +132,7 @@ public class CreateTaskFragment extends DialogFragment {
     private void setPriorityFromRatingBar(RatingBar ratingBar) {
         Toast.makeText(getActivity(), String.valueOf(ratingBar.getRating()), Toast.LENGTH_SHORT).show();
         int index = ratingBar.getRating() == 0 ? 0 : (int) (ratingBar.getRating() - 1);
+        createTaskButton.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.primaryColor));
         taskPriority = PriorityLevel.values()[index];
     }
 
