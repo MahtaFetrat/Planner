@@ -1,6 +1,7 @@
 package com.example.planner.ui.views;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import com.example.planner.R;
 import com.example.planner.model.Motivation;
 import com.example.planner.ui.viewModels.TaskViewModel;
+
 
 public class MotivationDetailFragment extends DialogFragment {
 
@@ -77,6 +79,14 @@ public class MotivationDetailFragment extends DialogFragment {
 
     private void setOnClickListeners() {
         motivationDetailDeleteButton.setOnClickListener(view -> {deleteMotivation();});
+        shareMotivationButton.setOnClickListener(view -> {
+            Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_SUBJECT, "Motivational Sentence");
+            intent.putExtra(Intent.EXTRA_TEXT, motivation.getSentence());
+
+            startActivity(intent.createChooser(intent, "Share Motivation"));
+        });
     }
 
     private void deleteMotivation() {
