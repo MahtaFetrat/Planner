@@ -3,6 +3,7 @@ package com.example.planner.ui.views;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Point;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.os.Environment;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +20,15 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.planner.R;
 import com.example.planner.model.Motivation;
 import com.example.planner.ui.viewModels.TaskViewModel;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 
 public class MotivationDetailFragment extends DialogFragment {
@@ -78,15 +85,49 @@ public class MotivationDetailFragment extends DialogFragment {
     }
 
     private void setOnClickListeners() {
-        motivationDetailDeleteButton.setOnClickListener(view -> {deleteMotivation();});
-        shareMotivationButton.setOnClickListener(view -> {
-            Intent intent = new Intent(android.content.Intent.ACTION_SEND);
-            intent.setType("text/plain");
-            intent.putExtra(Intent.EXTRA_SUBJECT, "Motivational Sentence");
-            intent.putExtra(Intent.EXTRA_TEXT, motivation.getSentence());
+        motivationDetailDeleteButton.setOnClickListener(view -> { deleteMotivation(); });
+        shareMotivationButton.setOnClickListener(view -> { showShareChooser(); });
+        exportMotivationButton.setOnClickListener(view -> { new StoreMotivationAsFile().execute(motivation); });
+    }
 
-            startActivity(intent.createChooser(intent, "Share Motivation"));
-        });
+    private class StoreMotivationAsFile extends AsyncTask<Motivation, Integer, String> {
+
+        @Override
+        protected String doInBackground(Motivation... motivations) {
+            String state = Environment.getExternalStorageState();
+            if (Environment.MEDIA_MOUNTED.equals(state)) {
+                File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+                File file = new File(path, "motivation_" + motivations[0].getId() + ".txt");
+                try {
+                    FileOutputStream f = new FileOutputStream(file);
+                    f.write(motivation.getSentence().getBytes());
+                    f.flush();
+                    f.close();
+                    return file.getPath();
+                } catch (IOException e) {
+                    return "";
+                }
+            }
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String path) {
+            if (path.isEmpty()) {
+                Toast.makeText(getActivity(), "Couldn't save motivation ...", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Toast.makeText(getActivity(), "Saved motivation to " + path, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void showShareChooser() {
+        Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Motivational Sentence");
+        intent.putExtra(Intent.EXTRA_TEXT, motivation.getSentence());
+
+        startActivity(intent.createChooser(intent, "Share Motivation"));
     }
 
     private void deleteMotivation() {
