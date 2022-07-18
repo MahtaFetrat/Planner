@@ -1,16 +1,27 @@
 package com.example.planner.ui.views;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
 import com.example.planner.R;
 import com.example.planner.model.PriorityLevel;
@@ -21,6 +32,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -84,13 +96,16 @@ public class CreateTaskActivity extends AppCompatActivity {
             dueYear = y;
             dueMonth = m + 1;
             dueDay = d;
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(dueYear, dueMonth, dueDay, dueHour, dueMinute);
+            dueDateButton.setText(getResources().getString(R.string.dueDateFormatSpecifier, formatter.format(calendar.getTime())));
         };
 
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_WEEK, 1);
+        calendar.add(Calendar.DAY_OF_YEAR, 1);
         dueYear = calendar.get(Calendar.YEAR);
         dueMonth = calendar.get(Calendar.MONTH);
-        dueDay = calendar.get(Calendar.DAY_OF_WEEK);
+        dueDay = calendar.get(Calendar.DAY_OF_MONTH);
         dueDateButton.setText(getResources().getString(R.string.dueDateFormatSpecifier, formatter.format(calendar.getTime())));
 
         dueDatePickerDialog = new DatePickerDialog(this, dateSetListener,dueYear, dueMonth, dueDay);
@@ -101,6 +116,7 @@ public class CreateTaskActivity extends AppCompatActivity {
         TimePickerDialog.OnTimeSetListener timeSetListener = (timePicker, h, m) -> {
             dueHour = h;
             dueMinute = m;
+            dueTimeButton.setText(getResources().getString(R.string.dueTimeFormatSpecifier, String.format(Locale.getDefault(), "%02d:%02d", dueHour, dueMinute)));
         };
 
         Calendar calendar = Calendar.getInstance();
@@ -117,6 +133,9 @@ public class CreateTaskActivity extends AppCompatActivity {
             reminderYear = y;
             reminderMonth = m + 1;
             reminderDay = d;
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(reminderYear, reminderMonth, reminderDay, reminderHour, reminderMinute);
+            reminderDateButton.setText(getResources().getString(R.string.reminderDateFormatSpecifier, formatter.format(calendar.getTime())));
         };
 
         Calendar calendar = Calendar.getInstance();
@@ -124,7 +143,7 @@ public class CreateTaskActivity extends AppCompatActivity {
         calendar.add(Calendar.DAY_OF_YEAR, -1);
         reminderYear = calendar.get(Calendar.YEAR);
         reminderMonth = calendar.get(Calendar.MONTH);
-        reminderDay = calendar.get(Calendar.DAY_OF_WEEK);
+        reminderDay = calendar.get(Calendar.DAY_OF_MONTH);
         reminderDateButton.setText(getResources().getString(R.string.reminderDateFormatSpecifier, formatter.format(calendar.getTime())));
 
         reminderDatePickerDialog = new DatePickerDialog(this, dateSetListener, reminderYear, reminderMonth, reminderDay);
@@ -135,13 +154,11 @@ public class CreateTaskActivity extends AppCompatActivity {
         TimePickerDialog.OnTimeSetListener timeSetListener = (timePicker, h, m) -> {
             reminderHour = h;
             reminderMinute = m;
+            reminderTimeButton.setText(getResources().getString(R.string.reminderTimeFormatSpecifier, String.format(Locale.getDefault(), "%02d:%02d", reminderHour, reminderMinute)));
         };
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(dueYear, dueMonth, dueDay, dueHour, dueMinute);
-        calendar.add(Calendar.DAY_OF_YEAR, -1);
-        reminderHour = calendar.get(Calendar.HOUR);
-        reminderMinute = calendar.get(Calendar.MINUTE);
+        reminderHour = dueHour;
+        reminderMinute = dueMinute;
         reminderTimeButton.setText(getResources().getString(R.string.reminderTimeFormatSpecifier, String.format(Locale.getDefault(), "%02d:%02d", reminderHour, reminderMinute)));
 
         reminderTimePickerDialog = new TimePickerDialog(this, timeSetListener, reminderHour, reminderMinute, true);
@@ -178,7 +195,9 @@ public class CreateTaskActivity extends AppCompatActivity {
             Task newTask = Task.createNewTask(name, description, taskPriority, dueYear, dueMonth, dueDay, dueHour, dueMinute, 0, hasReminder,
                     reminderYear, reminderMonth, reminderDay, reminderHour, reminderMinute, 0);
             viewModel.insert(newTask);
-
+            if (newTask.getHasReminder()) {
+                setReminder(newTask);
+            }
             return true;
         }
         return false;
@@ -210,5 +229,19 @@ public class CreateTaskActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setReminder(Task task) {
+        AlarmManager am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, ReminderBroadcastReceiver.class);
+        intent.putExtra("taskId", task.getId());
+        intent.putExtra("taskTitle", task.getTitle());
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+
+        LocalDateTime time = task.getReminderLocalDateTime();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(time.getYear(), time.getMonthValue(), time.getDayOfMonth(), time.getHour(), time.getMinute(), 0);
+
+        am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
     }
 }

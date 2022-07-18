@@ -96,7 +96,7 @@ public class TaskDetailFragment extends DialogFragment {
         taskDueTime.setText(timeFormatter.format(task.getDueDateLocalDateTime()));
         if (task.getHasReminder()) {
             taskDetailReminderDateTimeLayout.setVisibility(View.VISIBLE);
-            taskReminderDate.setText(dateFormatter.format(task.getDueDateLocalDateTime()));
+            taskReminderDate.setText(dateFormatter.format(task.getReminderLocalDateTime()));
             taskReminderTime.setText(timeFormatter.format(task.getReminderLocalDateTime()));
         }
         PriorityLevel priority = task.getPriorityLevel();

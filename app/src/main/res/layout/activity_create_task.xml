@@ -91,7 +91,7 @@
         android:id="@+id/reminderTimeInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:icon="@drawable/ic_baseline_access_time_24"
+        app:icon="@drawable/ic_baseline_access_alarm_24"
         app:iconGravity="textStart"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
         android:visibility="invisible" />
