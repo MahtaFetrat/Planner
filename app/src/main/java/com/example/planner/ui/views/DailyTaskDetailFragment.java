@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.example.planner.R;
 import com.example.planner.model.DailyTask;
 import com.example.planner.ui.viewModels.TaskViewModel;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.time.format.DateTimeFormatter;
 
@@ -84,7 +85,7 @@ public class DailyTaskDetailFragment extends DialogFragment {
 
     private void setTaskDetailFieldValues() {
         taskTitle.setText(dailyTask.getTitle());
-        taskDescription.setText(dailyTask.getTitle());
+        taskDescription.setText(dailyTask.getDescription());
         taskStartTime.setText(timeFormatter.format(dailyTask.getStartLocalTime()));
         taskEndTime.setText(timeFormatter.format(dailyTask.getEndLocalTime()));
         taskIsDone.setChecked(dailyTask.isDone());
@@ -102,6 +103,14 @@ public class DailyTaskDetailFragment extends DialogFragment {
     private void deleteTask() {
         viewModel.deleteDailyWord(dailyTask);
         dismiss();
+        Snackbar.make(MainActivity.navView, "Task deleted", Snackbar.LENGTH_LONG)
+                .setAction("UNDO", view -> {
+                    undoDeletion();
+                }).show();
+    }
+
+    private void undoDeletion() {
+        viewModel.insertDaily(dailyTask);
     }
 
     @NonNull

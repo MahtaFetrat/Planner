@@ -21,7 +21,10 @@ android:paddingBottom="15dp">
         android:id="@+id/dailyTaskNameTextInputEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/task_input" />
+        android:hint="@string/task_input"
+        android:maxLines="1"
+        android:inputType="text"
+        android:maxLength="50" />
 
 </com.google.android.material.textfield.TextInputLayout>
 

@@ -1,72 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 tools:context=".ui.views.MotivationDetailFragment"
-android:orientation="vertical"
 android:paddingHorizontal="20dp"
 android:paddingTop="25dp"
 android:paddingBottom="40dp">
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/motivationDetailButtonHolder"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" >
+        android:layout_height="match_parent">
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/shareMotivationButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_share_24"
-            android:background="@android:color/transparent"
-            android:layout_marginEnd="15dp" />
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/exportMotivationButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_save_alt_24"
-            android:background="@android:color/transparent"
-            android:layout_marginEnd="15dp" />
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/motivationDetailDeleteButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_delete_24"
-            android:background="@android:color/transparent" />
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-    <com.google.android.material.card.MaterialCardView
-        app:layout_constraintTop_toBottomOf="@id/motivationDetailButtonHolder"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:contentPadding="10dp"
-        app:cardElevation="2dp"
-        android:layout_marginVertical="15dp"
-        android:layout_marginHorizontal="10dp" >
-
-        <ScrollView
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/motivationDetailButtonHolder"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" >
 
-            <TextView
-                android:id="@+id/motivationDetailTextView"
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/shareMotivationButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_share_24"
+                android:background="@android:color/transparent"
+                android:layout_marginEnd="15dp" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/exportMotivationButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_save_alt_24"
+                android:background="@android:color/transparent"
+                android:layout_marginEnd="15dp" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/motivationDetailDeleteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_delete_24"
+                android:background="@android:color/transparent" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <com.google.android.material.card.MaterialCardView
+            app:layout_constraintTop_toBottomOf="@id/motivationDetailButtonHolder"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:contentPadding="10dp"
+            app:cardElevation="2dp"
+            android:layout_marginVertical="15dp"
+            android:layout_marginHorizontal="10dp" >
+
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </ScrollView>
-    </com.google.android.material.card.MaterialCardView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/motivationDetailTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </ScrollView>
+        </com.google.android.material.card.MaterialCardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

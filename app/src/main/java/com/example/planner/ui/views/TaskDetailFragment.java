@@ -114,7 +114,7 @@ public class TaskDetailFragment extends DialogFragment {
     private void deleteTask() {
         viewModel.deleteTask(task);
         dismiss();
-        Snackbar.make(TaskFragment.createNewTask, "Task deleted", Snackbar.LENGTH_LONG)
+        Snackbar.make(MainActivity.navView, "Task deleted", Snackbar.LENGTH_LONG)
                 .setAction("UNDO", view -> {
                     undoDeletion();
                 }).show();

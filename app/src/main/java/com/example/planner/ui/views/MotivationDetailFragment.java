@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.example.planner.R;
 import com.example.planner.model.Motivation;
 import com.example.planner.ui.viewModels.TaskViewModel;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -133,6 +134,14 @@ public class MotivationDetailFragment extends DialogFragment {
     private void deleteMotivation() {
         viewModel.deleteMotivation(motivation);
         dismiss();
+        Snackbar.make(MainActivity.navView, "Task deleted", Snackbar.LENGTH_LONG)
+                .setAction("UNDO", view -> {
+                    undoDeletion();
+                }).show();
+    }
+
+    private void undoDeletion() {
+        viewModel.insertMotivation(motivation);
     }
 
     @NonNull

@@ -24,6 +24,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
     private static final int ENTER_TASK_NOTIFICATION_ID = 1;
+    public static BottomNavigationView navView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setBottomNavigation() {
-        BottomNavigationView navView = findViewById(R.id.bottom_nav_view);
+        navView = findViewById(R.id.bottom_nav_view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.taskFragment, R.id.dailyTaskFragment, R.id.motivationFragment)
                 .build();
