@@ -10,6 +10,9 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -177,6 +180,31 @@ public class CreateTaskActivity extends AppCompatActivity {
             hasReminder = setReminderCheckBox.isChecked();
             reminderDateButton.setVisibility(hasReminder ? View.VISIBLE : View.INVISIBLE);
             reminderTimeButton.setVisibility(hasReminder ? View.VISIBLE : View.INVISIBLE);
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(dueYear, dueMonth, dueDay, dueHour, dueMinute);
+            calendar.add(Calendar.DAY_OF_YEAR, -1);
+            reminderYear = calendar.get(Calendar.YEAR);
+            reminderMonth = calendar.get(Calendar.MONTH);
+            reminderDay = calendar.get(Calendar.DAY_OF_MONTH);
+            reminderHour = calendar.get(Calendar.HOUR);
+            reminderMinute = calendar.get(Calendar.MINUTE);
+
+            reminderDateButton.setText(getResources().getString(R.string.reminderDateFormatSpecifier, formatter.format(calendar.getTime())));
+            reminderTimeButton.setText(getResources().getString(R.string.reminderTimeFormatSpecifier, String.format(Locale.getDefault(), "%02d:%02d", reminderHour, reminderMinute)));
+        });
+        taskNameEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                taskNameInputLayout.setError(null);
+            }
         });
     }
 
