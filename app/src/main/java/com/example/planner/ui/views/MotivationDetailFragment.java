@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.example.planner.R;
 import com.example.planner.model.Motivation;
 import com.example.planner.ui.viewModels.TaskViewModel;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
@@ -42,6 +43,8 @@ public class MotivationDetailFragment extends DialogFragment {
     AppCompatImageButton motivationDetailDeleteButton;
     AppCompatImageButton exportMotivationButton;
     AppCompatImageButton shareMotivationButton;
+
+    CircularProgressIndicator saveMotivationProgressIndicator;
 
     public MotivationDetailFragment() {
         // Required empty public constructor
@@ -79,6 +82,8 @@ public class MotivationDetailFragment extends DialogFragment {
         motivationDetailDeleteButton = view.findViewById(R.id.motivationDetailDeleteButton);
         exportMotivationButton = view.findViewById(R.id.exportMotivationButton);
         shareMotivationButton = view.findViewById(R.id.shareMotivationButton);
+
+        saveMotivationProgressIndicator = view.findViewById(R.id.saveMotivationProgressIndicator);
     }
 
     private void setTaskDetailFieldValues() {
@@ -92,6 +97,11 @@ public class MotivationDetailFragment extends DialogFragment {
     }
 
     private class StoreMotivationAsFile extends AsyncTask<Motivation, Integer, String> {
+        @Override
+        protected void onPreExecute() {
+            saveMotivationProgressIndicator.setVisibility(View.VISIBLE);
+            exportMotivationButton.setEnabled(false);
+        }
 
         @Override
         protected String doInBackground(Motivation... motivations) {
@@ -114,6 +124,9 @@ public class MotivationDetailFragment extends DialogFragment {
 
         @Override
         protected void onPostExecute(String path) {
+            saveMotivationProgressIndicator.setVisibility(View.INVISIBLE);
+            exportMotivationButton.setEnabled(true);
+
             if (path.isEmpty()) {
                 Toast.makeText(getActivity(), "Couldn't save motivation ...", Toast.LENGTH_SHORT).show();
                 return;
