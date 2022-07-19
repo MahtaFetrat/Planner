@@ -1,5 +1,6 @@
 package com.example.planner.ui.views;
 
+import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -13,6 +14,8 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.planner.R;
+import com.example.planner.data.Repository;
+import com.example.planner.model.Task;
 
 public class ReminderBroadcastReceiver extends BroadcastReceiver {
     @Override
@@ -21,26 +24,29 @@ public class ReminderBroadcastReceiver extends BroadcastReceiver {
         int taskId = bundle.getInt("taskId");
         String text = bundle.getString("taskTitle");
 
-        Intent taskIntent = new Intent(context, MainActivity.class);
-        taskIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, taskIntent, PendingIntent.FLAG_IMMUTABLE);
+        Task task = Repository.getInstance((Application) context.getApplicationContext()).getTaskById(taskId);
+        if (task != null) {
+            Intent taskIntent = new Intent(context, MainActivity.class);
+            taskIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, taskIntent, PendingIntent.FLAG_IMMUTABLE);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel("REMINDER_CHANNEL", "Task reminders", NotificationManager.IMPORTANCE_DEFAULT);
-            channel.setDescription("Will notify users with the tasks that have a reminder set for them");
-            NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                NotificationChannel channel = new NotificationChannel("REMINDER_CHANNEL", "Task reminders", NotificationManager.IMPORTANCE_DEFAULT);
+                channel.setDescription("Will notify users with the tasks that have a reminder set for them");
+                NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+                notificationManager.createNotificationChannel(channel);
+            }
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "REMINDER_CHANNEL")
+                    .setSmallIcon(R.drawable.ic_baseline_access_alarm_24)
+                    .setContentTitle("You have an upcoming task!")
+                    .setContentText("Task: " + text)
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setContentIntent(pendingIntent)
+                    .setAutoCancel(true);
+
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+            notificationManager.notify(taskId, builder.build());
         }
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "REMINDER_CHANNEL")
-                .setSmallIcon(R.drawable.ic_baseline_access_alarm_24)
-                .setContentTitle("You have an upcoming task!")
-                .setContentText("Task: " + text)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true);
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-        notificationManager.notify(taskId, builder.build());
     }
 }
