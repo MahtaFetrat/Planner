@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.planner.R;
-import com.example.planner.ui.viewModels.TaskViewModel;
 
 public class SettingsActivity extends AppCompatActivity {
 

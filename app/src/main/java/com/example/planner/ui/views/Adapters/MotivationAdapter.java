@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.planner.R;
 import com.example.planner.model.Motivation;
-import com.example.planner.ui.views.DailyTaskDetailFragment;
 import com.example.planner.ui.views.MotivationDetailFragment;
 
 import java.util.List;

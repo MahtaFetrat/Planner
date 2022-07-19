@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,7 +18,6 @@ import com.example.planner.R;
 import com.example.planner.model.DailyTask;
 import com.example.planner.ui.viewModels.TaskViewModel;
 import com.example.planner.ui.views.DailyTaskDetailFragment;
-import com.example.planner.ui.views.TaskDetailFragment;
 
 import java.util.List;
 

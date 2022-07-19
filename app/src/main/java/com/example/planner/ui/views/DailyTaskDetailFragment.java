@@ -22,7 +22,6 @@ import android.widget.TextView;
 
 import com.example.planner.R;
 import com.example.planner.model.DailyTask;
-import com.example.planner.model.PriorityLevel;
 import com.example.planner.ui.viewModels.TaskViewModel;
 
 import java.time.format.DateTimeFormatter;

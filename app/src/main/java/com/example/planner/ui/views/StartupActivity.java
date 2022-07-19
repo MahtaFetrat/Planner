@@ -2,8 +2,6 @@ package com.example.planner.ui.views;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -14,8 +12,6 @@ import com.example.planner.R;
 import com.example.planner.model.Motivation;
 import com.example.planner.ui.viewModels.TaskViewModel;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class StartupActivity extends AppCompatActivity {
 
@@ -49,14 +45,11 @@ public class StartupActivity extends AppCompatActivity {
     }
 
     private void setStartupSentence() {
-        viewModel.getAllMotivations().observe(this, new Observer<List<Motivation>>() {
-            @Override
-            public void onChanged(List<Motivation> motivations) {
-                if (!motivations.isEmpty()) {
-                    int randomIndex = (int)(Math.random() * motivations.size());
-                    Motivation motivation = motivations.get(randomIndex);
-                    startupSentenceTextView.setText(motivation.getSentence());
-                }
+        viewModel.getAllMotivations().observe(this, motivations -> {
+            if (!motivations.isEmpty()) {
+                int randomIndex = (int)(Math.random() * motivations.size());
+                Motivation motivation = motivations.get(randomIndex);
+                startupSentenceTextView.setText(motivation.getSentence());
             }
         });
     }
