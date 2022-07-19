@@ -1,98 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.views.CreateTaskActivity"
-    android:orientation="vertical"
     android:paddingHorizontal="30dp"
     android:paddingTop="30dp"
     android:paddingBottom="15dp">
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/taskNameInputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        app:errorEnabled="false" >
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/newTaskNameTextInputEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/task_input" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp" >
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/newTaskDescriptionTextInputEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/task_description" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/taskDateInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:icon="@drawable/ic_baseline_date_range_24"
-        app:iconGravity="textStart" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/taskTimeInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:icon="@drawable/ic_baseline_access_time_24"
-        app:iconGravity="textStart" />
-
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <CheckBox
-            android:id="@+id/reminder"
-            android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/taskNameInputLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Set a reminder"
-            android:layout_gravity="center"/>
+            android:layout_marginBottom="5dp"
+            app:errorEnabled="false" >
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/newTaskNameTextInputEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/task_input"
+                android:maxLines="1"
+                android:inputType="text"
+                android:maxLength="50" />
 
-        <RatingBar
-            android:id="@+id/taskPriorityInput"
-            android:layout_width="wrap_content"
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:numStars="3"
-            android:stepSize="1"
-            style="?android:attr/ratingBarStyleIndicator"
-            android:isIndicator="false"
-            android:layout_gravity="center" />
+            android:layout_marginBottom="5dp" >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/newTaskDescriptionTextInputEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/task_description" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/taskDateInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_baseline_date_range_24"
+            app:iconGravity="textStart" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/taskTimeInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_baseline_access_time_24"
+            app:iconGravity="textStart" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <CheckBox
+                android:id="@+id/reminder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Set a reminder"
+                android:layout_gravity="center"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <RatingBar
+                android:id="@+id/taskPriorityInput"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="3"
+                android:stepSize="1"
+                style="?android:attr/ratingBarStyleIndicator"
+                android:isIndicator="false"
+                android:layout_gravity="center" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/reminderDateInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_baseline_date_range_24"
+            app:iconGravity="textStart"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+            android:visibility="invisible" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/reminderTimeInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_baseline_access_alarm_24"
+            app:iconGravity="textStart"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+            android:visibility="invisible" />
     </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/reminderDateInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:icon="@drawable/ic_baseline_date_range_24"
-        app:iconGravity="textStart"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-        android:visibility="invisible" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/reminderTimeInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:icon="@drawable/ic_baseline_access_alarm_24"
-        app:iconGravity="textStart"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-        android:visibility="invisible" />
-</androidx.appcompat.widget.LinearLayoutCompat>
+</ScrollView>

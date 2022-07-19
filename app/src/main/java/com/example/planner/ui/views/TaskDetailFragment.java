@@ -24,6 +24,7 @@ import com.example.planner.R;
 import com.example.planner.model.PriorityLevel;
 import com.example.planner.model.Task;
 import com.example.planner.ui.viewModels.TaskViewModel;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.time.format.DateTimeFormatter;
 
@@ -90,7 +91,7 @@ public class TaskDetailFragment extends DialogFragment {
 
     private void setTaskDetailFieldValues() {
         taskTitle.setText(task.getTitle());
-        taskDescription.setText(task.getTitle());
+        taskDescription.setText(task.getDescription());
         taskDueDate.setText(dateFormatter.format(task.getDueDateLocalDateTime()));
         taskDueTime.setText(timeFormatter.format(task.getDueDateLocalDateTime()));
         if (task.getHasReminder()) {
@@ -106,9 +107,17 @@ public class TaskDetailFragment extends DialogFragment {
         taskDetailDeleteButton.setOnClickListener(view -> {deleteTask();});
     }
 
+    private void undoDeletion() {
+        viewModel.insert(task);
+    }
+
     private void deleteTask() {
         viewModel.deleteTask(task);
         dismiss();
+        Snackbar.make(TaskFragment.createNewTask, "Task deleted", Snackbar.LENGTH_LONG)
+                .setAction("UNDO", view -> {
+                    undoDeletion();
+                }).show();
     }
 
     @NonNull

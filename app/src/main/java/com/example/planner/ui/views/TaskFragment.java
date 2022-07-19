@@ -26,7 +26,7 @@ import java.util.ArrayList;
 public class TaskFragment extends Fragment {
     private TaskViewModel viewModel;
 
-    private FloatingActionButton createNewTask;
+    public static FloatingActionButton createNewTask;
     private RecyclerView tasksRecyclerView;
 
     private TasksAdapter tasksAdapter;
