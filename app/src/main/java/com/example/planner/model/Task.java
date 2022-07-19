@@ -47,6 +47,17 @@ public class Task implements Comparable<Task> {
         return new Task(title, description, priorityLevel, dueTimeString, hasReminder, reminderTimeString);
     }
 
+    public void updateNewTask(String title, String description, PriorityLevel priorityLevel,
+                                     int dueYear, int dueMonth, int dueDay, int dueHour, int dueMinute, int dueSecond, boolean hasReminder,
+                                     int reminderYear, int reminderMonth, int reminderDay, int reminderHour, int reminderMinute, int reminderSecond) {
+        String dueTimeString = LocalDateTime.of(dueYear, dueMonth, dueDay, dueHour, dueMinute, dueSecond).toString();
+        String reminderTimeString = LocalDateTime.of(reminderYear, reminderMonth, reminderDay, reminderHour, reminderMinute, reminderSecond).toString();
+        this.title = title;
+        this.description = description;
+        this.dueTime = dueTimeString;
+        this.reminderTime = reminderTimeString;
+    }
+
     public LocalDateTime getDueDateLocalDateTime() {
         return LocalDateTime.parse(dueTime);
     }

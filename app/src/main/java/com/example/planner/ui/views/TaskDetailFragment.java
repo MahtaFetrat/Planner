@@ -1,6 +1,7 @@
 package com.example.planner.ui.views;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 
@@ -42,6 +43,7 @@ public class TaskDetailFragment extends DialogFragment {
     LinearLayoutCompat taskDetailReminderDateTimeLayout;
 
     AppCompatImageButton taskDetailDeleteButton;
+    AppCompatImageButton taskDetailEditButton;
 
     DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
     DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
@@ -86,6 +88,7 @@ public class TaskDetailFragment extends DialogFragment {
         taskDetailReminderDateTimeLayout = view.findViewById(R.id.taskDetailReminderDateTimeLayout);
 
         taskDetailDeleteButton = view.findViewById(R.id.taskDetailDeleteButton);
+        taskDetailEditButton = view.findViewById(R.id.taskDetailEditButton);
     }
 
     private void setTaskDetailFieldValues() {
@@ -104,10 +107,18 @@ public class TaskDetailFragment extends DialogFragment {
 
     private void setOnClickListeners() {
         taskDetailDeleteButton.setOnClickListener(view -> {deleteTask();});
+        taskDetailEditButton.setOnClickListener(view -> { editTask(); });
     }
 
     private void deleteTask() {
         viewModel.deleteTask(task);
+        dismiss();
+    }
+
+    private void editTask() {
+        Intent intent = new Intent(getActivity(), CreateTaskActivity.class);
+        intent.putExtra("taskId", task.getId());
+        startActivity(intent);
         dismiss();
     }
 

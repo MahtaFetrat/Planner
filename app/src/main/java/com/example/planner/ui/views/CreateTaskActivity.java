@@ -10,6 +10,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -53,6 +54,8 @@ public class CreateTaskActivity extends AppCompatActivity {
     private PriorityLevel taskPriority = PriorityLevel.REGULAR;
     private boolean hasReminder = false;
 
+    private Task task;
+
     private final SimpleDateFormat formatter = new SimpleDateFormat("MMMM dd yyyy");
 
     @Override
@@ -63,14 +66,20 @@ public class CreateTaskActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(TaskViewModel.class);
 
         findViewsById();
+        Intent intent = getIntent();
+        int taskId = intent.getIntExtra("taskId", -1);
+        if (taskId != -1) {
+            task = viewModel.getTaskById(taskId);
+        }
+
         initDueDatePicker();
         initDueTimePicker();
         initReminderDatePicker();
         initReminderTimePicker();
+        initFieldValuesIfEditing();
         initRatingBar();
         setEventListeners();
     }
-
 
     private void findViewsById() {
         taskNameInputLayout = findViewById(R.id.taskNameInputLayout);
@@ -95,6 +104,10 @@ public class CreateTaskActivity extends AppCompatActivity {
         };
 
         Calendar calendar = Calendar.getInstance();
+        if (task != null) {
+            LocalDateTime time = task.getDueDateLocalDateTime();
+            calendar.set(time.getYear(), time.getMonthValue(), time.getDayOfMonth(), time.getHour(), time.getMinute());
+        }
         calendar.add(Calendar.DAY_OF_YEAR, 1);
         dueYear = calendar.get(Calendar.YEAR);
         dueMonth = calendar.get(Calendar.MONTH);
@@ -113,6 +126,10 @@ public class CreateTaskActivity extends AppCompatActivity {
         };
 
         Calendar calendar = Calendar.getInstance();
+        if (task != null) {
+            LocalDateTime time = task.getDueDateLocalDateTime();
+            calendar.set(time.getYear(), time.getMonthValue(), time.getDayOfMonth(), time.getHour(), time.getMinute());
+        }
         dueHour = calendar.get(Calendar.HOUR);
         dueMinute = calendar.get(Calendar.MINUTE);
         dueTimeButton.setText(getResources().getString(R.string.dueTimeFormatSpecifier, String.format(Locale.getDefault(), "%02d:%02d", dueHour, dueMinute)));
@@ -132,8 +149,13 @@ public class CreateTaskActivity extends AppCompatActivity {
         };
 
         Calendar calendar = Calendar.getInstance();
-        calendar.set(dueYear, dueMonth, dueDay, dueHour, dueMinute);
-        calendar.add(Calendar.DAY_OF_YEAR, -1);
+        if (task != null) {
+            LocalDateTime time = task.getDueDateLocalDateTime();
+            calendar.set(time.getYear(), time.getMonthValue(), time.getDayOfMonth(), time.getHour(), time.getMinute());
+        } else {
+            calendar.set(dueYear, dueMonth, dueDay, dueHour, dueMinute);
+            calendar.add(Calendar.DAY_OF_YEAR, -1);
+        }
         reminderYear = calendar.get(Calendar.YEAR);
         reminderMonth = calendar.get(Calendar.MONTH);
         reminderDay = calendar.get(Calendar.DAY_OF_MONTH);
@@ -150,12 +172,27 @@ public class CreateTaskActivity extends AppCompatActivity {
             reminderTimeButton.setText(getResources().getString(R.string.reminderTimeFormatSpecifier, String.format(Locale.getDefault(), "%02d:%02d", reminderHour, reminderMinute)));
         };
 
-        reminderHour = dueHour;
-        reminderMinute = dueMinute;
+        if (task != null) {
+            LocalDateTime time = task.getDueDateLocalDateTime();
+            reminderHour = time.getHour();
+            reminderMinute = time.getMinute();
+        } else {
+            reminderHour = dueHour;
+            reminderMinute = dueMinute;
+        }
         reminderTimeButton.setText(getResources().getString(R.string.reminderTimeFormatSpecifier, String.format(Locale.getDefault(), "%02d:%02d", reminderHour, reminderMinute)));
 
         reminderTimePickerDialog = new TimePickerDialog(this, timeSetListener, reminderHour, reminderMinute, true);
         reminderTimePickerDialog.setTitle("Pick a reminder time for this task");
+    }
+
+    private void initFieldValuesIfEditing() {
+        if (task != null) {
+            taskNameEditText.setText(task.getTitle());
+            taskDescriptionEditText.setText(task.getDescription());
+            priorityRatingBar.setRating((task.getPriorityLevel() == PriorityLevel.ESSENTIAL ? 3 : (task.getPriorityLevel() == PriorityLevel.IMPORTANT ? 2 : 1)));
+            hasReminder = task.getHasReminder();
+        }
     }
 
     private void initRatingBar() {
@@ -196,6 +233,22 @@ public class CreateTaskActivity extends AppCompatActivity {
         return false;
     }
 
+    private boolean editTask() {
+        if (validateTaskFrom()) {
+            String name = String.valueOf(this.taskNameEditText.getText());
+            String description = String.valueOf(taskDescriptionEditText.getText());
+
+            task.updateNewTask(name, description, taskPriority, dueYear, dueMonth, dueDay, dueHour, dueMinute, 0, hasReminder,
+                    reminderYear, reminderMonth, reminderDay, reminderHour, reminderMinute, 0);
+            viewModel.updateTask(task);
+            if (task.getHasReminder()) {
+                setReminder(task);
+            }
+            return true;
+        }
+        return false;
+    }
+
     private boolean validateTaskFrom() {
         if (taskNameEditText.getText().toString().isEmpty()) {
             taskNameInputLayout.setError(getResources().getString(R.string.task_title_required_error));
@@ -216,7 +269,8 @@ public class CreateTaskActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.confirm_form_item) {
-            if (createTask()) {
+            boolean result = (task != null ? editTask() : createTask());
+            if (result) {
                 finish();
             }
             return true;
