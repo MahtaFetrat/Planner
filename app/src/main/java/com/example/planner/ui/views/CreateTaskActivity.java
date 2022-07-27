@@ -213,8 +213,8 @@ public class CreateTaskActivity extends AppCompatActivity {
             String name = String.valueOf(this.taskNameEditText.getText());
             String description = String.valueOf(taskDescriptionEditText.getText());
 
-            Task newTask = Task.createNewTask(name, description, taskPriority, dueYear, dueMonth, dueDay, dueHour, dueMinute, 0, hasReminder,
-                    reminderYear, reminderMonth, reminderDay, reminderHour, reminderMinute, 0);
+            Task newTask = Task.createNewTask(name, description, taskPriority, dueYear, dueMonth + 1, dueDay, dueHour, dueMinute, 0, hasReminder,
+                    reminderYear, reminderMonth + 1, reminderDay, reminderHour, reminderMinute, 0);
             viewModel.insert(newTask);
             if (newTask.getHasReminder()) {
                 setReminder(newTask);
@@ -261,7 +261,7 @@ public class CreateTaskActivity extends AppCompatActivity {
 
         LocalDateTime time = task.getReminderLocalDateTime();
         Calendar calendar = Calendar.getInstance();
-        calendar.set(time.getYear(), time.getMonthValue(), time.getDayOfMonth(), time.getHour(), time.getMinute(), 0);
+        calendar.set(time.getYear(), time.getMonthValue() - 1, time.getDayOfMonth(), time.getHour(), time.getMinute(), 0);
 
         am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
     }
