@@ -90,7 +90,7 @@ public class CreateTaskActivity extends AppCompatActivity {
     private void initDueDatePicker() {
         DatePickerDialog.OnDateSetListener dateSetListener = (datePicker, y, m, d) -> {
             dueYear = y;
-            dueMonth = m + 1;
+            dueMonth = m;
             dueDay = d;
             Calendar calendar = Calendar.getInstance();
             calendar.set(dueYear, dueMonth, dueDay, dueHour, dueMinute);
@@ -127,7 +127,7 @@ public class CreateTaskActivity extends AppCompatActivity {
     private void initReminderDatePicker() {
         DatePickerDialog.OnDateSetListener dateSetListener = (datePicker, y, m, d) -> {
             reminderYear = y;
-            reminderMonth = m + 1;
+            reminderMonth = m;
             reminderDay = d;
             Calendar calendar = Calendar.getInstance();
             calendar.set(reminderYear, reminderMonth, reminderDay, reminderHour, reminderMinute);
