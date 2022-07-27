@@ -215,9 +215,9 @@ public class CreateTaskActivity extends AppCompatActivity {
 
             Task newTask = Task.createNewTask(name, description, taskPriority, dueYear, dueMonth + 1, dueDay, dueHour, dueMinute, 0, hasReminder,
                     reminderYear, reminderMonth + 1, reminderDay, reminderHour, reminderMinute, 0);
-            viewModel.insert(newTask);
+            int taskId = (int) viewModel.insert(newTask);
             if (newTask.getHasReminder()) {
-                setReminder(newTask);
+                setReminder(newTask, taskId);
             }
             return true;
         }
@@ -252,17 +252,16 @@ public class CreateTaskActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setReminder(Task task) {
+    private void setReminder(Task task, int taskId) {
         AlarmManager am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, ReminderBroadcastReceiver.class);
-        intent.putExtra("taskId", task.getId());
+        intent.putExtra("taskId", taskId);
         intent.putExtra("taskTitle", task.getTitle());
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, taskId, intent, 0);
 
         LocalDateTime time = task.getReminderLocalDateTime();
         Calendar calendar = Calendar.getInstance();
         calendar.set(time.getYear(), time.getMonthValue() - 1, time.getDayOfMonth(), time.getHour(), time.getMinute(), 0);
-
         am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
     }
 }

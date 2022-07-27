@@ -23,7 +23,7 @@ import com.example.planner.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
-    private static final int ENTER_TASK_NOTIFICATION_ID = 1;
+    private static final int ENTER_TASK_NOTIFICATION_ID = -1;
     public static BottomNavigationView navView;
 
     @Override
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private void showEnterTaskNotification() {
         Intent taskIntent = new Intent(this, MainActivity.class);
         taskIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, taskIntent, PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, -1, taskIntent, PendingIntent.FLAG_IMMUTABLE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel("NEW_TASK_CHANNEL", "Add upcoming tasks", NotificationManager.IMPORTANCE_DEFAULT);

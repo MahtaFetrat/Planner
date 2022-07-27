@@ -45,8 +45,8 @@ public class Repository {
         return allMotivations;
     }
 
-    public void insertTask(Task task) {
-        db.plannerDao().insert(task);
+    public long insertTask(Task task) {
+        return db.plannerDao().insert(task);
     }
 
     public void insertDailyTask(DailyTask dailyTask) {

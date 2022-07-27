@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -25,8 +26,8 @@ public interface PlannerDao {
     @Query("SELECT * FROM Motivation")
     LiveData<List<Motivation>> getAllMotivations();
 
-    @Insert
-    void insert(Task... tasks);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    long insert(Task tasks);
 
     @Insert
     void insert(DailyTask... dailyTasks);

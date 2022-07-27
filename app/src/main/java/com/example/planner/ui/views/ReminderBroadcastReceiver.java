@@ -9,9 +9,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.room.Room;
 
 import com.example.planner.R;
 import com.example.planner.data.Repository;
@@ -25,6 +27,7 @@ public class ReminderBroadcastReceiver extends BroadcastReceiver {
         String text = bundle.getString("taskTitle");
 
         Task task = Repository.getInstance((Application) context.getApplicationContext()).getTaskById(taskId);
+
         if (task != null) {
             Intent taskIntent = new Intent(context, MainActivity.class);
             taskIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
